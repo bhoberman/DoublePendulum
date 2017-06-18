@@ -16,7 +16,10 @@
    version="1.1"
    id="svg16"
    inkscape:version="0.92.1 r15371"
-   sodipodi:docname="situation.svg">
+   sodipodi:docname="situation.svg"
+   inkscape:export-filename="C:\Users\ben\Scripting\DoublePendulum\situation.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs10">
     <linearGradient
@@ -36,7 +39,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="417.10964"
+     inkscape:cx="242.10964"
      inkscape:cy="249.01476"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
