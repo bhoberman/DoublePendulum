@@ -41,5 +41,14 @@ In order to find the linear velocity , we can use the good old Pythagorean theor
 	v_1^2 + v_2^2 = \ell^2(\frac{5}{4}\dot{\theta_1}^2 + \frac{1}{4}\dot{\theta_2}^2 + \dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) \\
 	K_{linear} = \frac{1}{2}mv_1^2 + \frac{1}{2}mv_2^2 = \frac{1}{2}m(v_1^2 + v_2^2) = \frac{1}{2}m\ell^2(\frac{5}{4}\dot{\theta_1}^2 + \frac{1}{4}\dot{\theta_2}^2 + \dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) \\ = \frac{1}{8}m\ell^2(5\dot{\theta_1}^2 + \dot{\theta_2}^2 + 4\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2))
 \end{gather*}
+Because out selected independent coordinates describing the system are $\theta_1$ and $\theta_2$, describing the rotational kinetic energy of the system is much more simple. For each stick, $K_{rot} = \frac12 I \dot{\theta}^2 = \frac12 I (\dot{\theta_1}^2 + \dot{\theta_2}^2)$. Each stick's moment of inertia about its center of mass is $\frac{1}{12} m \ell^2$, so $K_{rot} = \frac{1}{24}m\ell^2(\dot{\theta_1}^2 + \dot{\theta_2}^2)$.
+
+We can now find the total kinetic energy of the system:
+\begin{gather*}
+	K = K_{linear} + K_{rot} = \frac{1}{8}m\ell^2(5\dot{\theta_1}^2 + \dot{\theta_2}^2 + 4\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) + \frac{1}{24}m\ell^2(\dot{\theta_1}^2 + \dot{\theta_2}^2) \\
+	= \frac{1}{24}m\ell^2(15\dot{\theta_1}^2 + 3\dot{\theta_2}^2 + 12\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2) + \dot{\theta_1}^2 + \dot{\theta_2}^2) \\
+	= \frac{1}{24}m\ell^2(16\dot{\theta_1}^2 + 4\dot{\theta_2}^2 + 12\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2) ) \\
+	= \frac16m\ell^2(4\dot{\theta_1}^2 + \dot{\theta_2}^2 + 3\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2))
+\end{gather*}
 
 \end{document}
