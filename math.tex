@@ -14,6 +14,8 @@
 \date{June 17, 2017}
 \maketitle
 
+\newcommand{\lagr}{\mathcal{L}}
+
 \section{Introduction}
 As it turns out, the double pendulum is pretty complex. For now, I am modeling a double pendulum consisting of two identical sticks, one attached to a fixed anchor and the other attached to the other end of the anchored stick. Some research divulged that Lagrangian mechanics would yield an easier way to understand the motion of this system, so after some research and an MIT online lecture, here is my attempt at using Lagrangian mechanics to describe the behavior of this system:
 
@@ -56,6 +58,21 @@ In order to find the Lagrangian of the system, we must also describe the potenti
 	U_g = \sum mg\Delta h = mg(\Delta h_1 + \Delta h_2) = mg(y_1 + y_2) \\
 	= mg(-\frac{\ell}{2}\cos(\theta_1)- \ell (\cos(\theta_1) + \frac{1}{2} \cos(\theta_2))) \\
 	= mg\ell(-\frac32\cos(\theta_1) - \frac12\cos(\theta_2)) = -\frac12 mg\ell(3\cos(\theta_1) + \cos(\theta_2))
+\end{gather*}
+
+Now that we have calculated the kinetic and potential energies of the system, we can calculate the Lagrangian, $\lagr = T - V$, where $T$ is the total kinetic energy and $V$ is the total potential energy:
+\begin{gather*}
+	\lagr = T - V = \frac16m\ell^2(4\dot{\theta_1}^2 + \dot{\theta_2}^2 + 3\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) + \frac12 mg\ell(3\cos(\theta_1) + \cos(\theta_2))
+\end{gather*}
+
+With the Lagrangian, we can set up the Euler-Lagrange differential equation for each coordinate:
+\begin{gather*}
+	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_i}} - \frac{\partial \lagr}{\partial \theta_i} = 0 \\
+	\frac{\partial \lagr}{\partial \dot{\theta_1}} = \frac{\partial}{\partial \dot{\theta_1}}(\frac16m\ell^2(4\dot{\theta_1}^2 + \dot{\theta_2}^2 + 3\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) + \frac12 mg\ell(3\cos(\theta_1) + \cos(\theta_2))) \\
+	\frac{\partial \lagr}{\partial \dot{\theta_1}} = \frac16m\ell^2(8\dot{\theta_1} + 3\dot{\theta_2}\cos(\theta_1 - \theta_2)) \\
+	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_1}} = \diff{}{t}(\frac16m\ell^2(8\dot{\theta_1} + 3\dot{\theta_2}\cos(\theta_1 - \theta_2))) = \frac16m\ell^2(8\ddot{\theta_1} + 3\ddot{\theta_2}\cos(\theta_1 - \theta_2) - 3\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})) \\
+	\frac{\partial \lagr}{\partial \theta_1} = \frac{\partial}{\partial \theta_1} (\frac16m\ell^2(4\dot{\theta_1}^2 + \dot{\theta_2}^2 + 3\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) + \frac12 mg\ell(3\cos(\theta_1) + \cos(\theta_2))) \\
+	\frac{\partial \lagr}{\partial \theta_1} = \frac16m\ell^2(-3\dot{\theta_1}^2\theta_2\sin(\theta_1 - \theta_2)) - \frac32m g \ell \dot{\theta_1} \sin(\theta_1)
 \end{gather*}
 
 \end{document}
