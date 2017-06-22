@@ -72,7 +72,15 @@ With the Lagrangian, we can set up the Euler-Lagrange differential equation for 
 	\frac{\partial \lagr}{\partial \dot{\theta_1}} = \frac16m\ell^2(8\dot{\theta_1} + 3\dot{\theta_2}\cos(\theta_1 - \theta_2)) \\
 	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_1}} = \diff{}{t}(\frac16m\ell^2(8\dot{\theta_1} + 3\dot{\theta_2}\cos(\theta_1 - \theta_2))) = \frac16m\ell^2(8\ddot{\theta_1} + 3\ddot{\theta_2}\cos(\theta_1 - \theta_2) - 3\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})) \\
 	\frac{\partial \lagr}{\partial \theta_1} = \frac{\partial}{\partial \theta_1} (\frac16m\ell^2(4\dot{\theta_1}^2 + \dot{\theta_2}^2 + 3\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) + \frac12 mg\ell(3\cos(\theta_1) + \cos(\theta_2))) \\
-	\frac{\partial \lagr}{\partial \theta_1} = \frac16m\ell^2(-3\dot{\theta_1}^2\theta_2\sin(\theta_1 - \theta_2)) - \frac32m g \ell \dot{\theta_1} \sin(\theta_1)
+	\frac{\partial \lagr}{\partial \theta_1} = -\frac12m\ell^2(\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2)) - \frac32m g \ell \sin(\theta_1) \\
+	\frac16m\ell^2(8\ddot{\theta_1} + 3\ddot{\theta_2}\cos(\theta_1 - \theta_2) - 3\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})) + \frac12m\ell^2(\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2)) + \frac32m g \ell \sin(\theta_1) =  0
+\end{gather*}
+
+\begin{gather*}
+	\frac{\partial \lagr}{\partial \dot{\theta_2}} = \frac{\partial}{\partial \dot{\theta_2}}(\frac16m\ell^2(4\dot{\theta_1}^2 + \dot{\theta_2}^2 + 3\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) + \frac12 mg\ell(3\cos(\theta_1) + \cos(\theta_2))) \\= \frac16m\ell^2(2\dot{\theta_2} + 3\dot{\theta_1}\cos(\theta_1 - \theta_2)) \\
+	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_2}} = \diff{}{t}(\frac16m\ell^2(2\dot{\theta_2} + 3\dot{\theta_1}\cos(\theta_1 - \theta_2))) = \frac16m\ell^2(2\ddot{\theta_2} + 3\ddot{\theta_1}\cos(\theta_1 - \theta_2) - 3\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1 - \theta_2})) \\
+	\frac{\partial \lagr}{\partial \theta_2} = \frac{\partial}{\partial \theta_2}(\frac16m\ell^2(4\dot{\theta_1}^2 + \dot{\theta_2}^2 + 3\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) + \frac12 mg\ell(3\cos(\theta_1) + \cos(\theta_2))) \\
+	= \frac12m\ell^2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - \frac12mg\ell\sin(\theta_2)
 \end{gather*}
 
 \end{document}
