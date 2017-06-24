@@ -90,6 +90,19 @@ We can now solve these two differential equations for $\ddot{\theta_1}$ and $\dd
 \begin{gather*}
 	\ell(8\ddot{\theta_1} + 3\ddot{\theta_2}\cos(\theta_1 - \theta_2) - 3\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})) + 3\ell\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) + 9g\sin(\theta_1) =  0 \\
 	\ell(2\ddot{\theta_2} + 3\ddot{\theta_1}\cos(\theta_1 - \theta_2) - 3\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})) - 3\ell\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) + 3g\sin(\theta_2) = 0 \\
+	\text{Let } S_1(\theta_1, \theta_2, \dot{\theta_1}, \dot{\theta_2}) = \frac{3\ell\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) - 3\ell\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 9g\sin(\theta_1)}{\ell} \\
+	\text{Let } S_2(\theta_1, \theta_2, \dot{\theta_1}, \dot{\theta_2})  = \frac{3\ell\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) + 3\ell\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g\sin(\theta_2)}{\ell} \\
+	8\ddot{\theta_1} + 3\ddot{\theta_2}\cos(\theta_1 - \theta_2) = S_1 \\
+	2\ddot{\theta_2} + 3\ddot{\theta_1}\cos(\theta_1 - \theta_2) = S_2 \\
+	\ddot{\theta_1} = \frac{S_1 - 3\ddot{\theta_2}}{8} \\
+	2\ddot{\theta_2} + \frac38S_1\cos(\theta_1 - \theta_2) - \frac98\ddot{\theta_2}\cos(\theta_1 - \theta_2) = S_2 \\
+	\ddot{\theta_2} = \frac{S_2 - \frac38S_1\cos(\theta_1 - \theta_2)}{2 - \frac98\cos(\theta_1 - \theta_2)} \\
+	\ddot{\theta_2} = \frac{S_2 - 3\ddot{\theta_1}\cos(\theta_1 - \theta_2)}{2} \\
+	\ddot{\theta_1} = \frac{2S_1 - 3S_2 - 9\ddot{\theta_1}\cos(\theta_1 - \theta_2)}{16} \\
+	\ddot{\theta_1} + \frac{9}{16}\ddot{\theta_1}\cos(\theta_1 - \theta_2) = \frac{2S_1 - 3S_2}{16} \\
+	\ddot{\theta_1} = \frac{\frac{2S_1 - 3S_2}{16}}{1 + \frac{9}{16}\cos(\theta_1 - \theta_2)} \\
 \end{gather*}
+
+We now have a pair of second order differential equations that describes the motion of the system. I really don't want to do any further algebra at the moment, so we will use these equations as-is our simulation.
 
 \end{document}
