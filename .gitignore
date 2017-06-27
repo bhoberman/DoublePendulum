@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+/DoublePendulum/DoublePendulum/Debug
+/DoublePendulum/DoublePendulum.VC.VC.opendb
+/DoublePendulum/DoublePendulum.VC.db
