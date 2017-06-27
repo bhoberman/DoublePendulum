@@ -90,6 +90,63 @@ We can now solve these two differential equations for $\ddot{\theta_1}$ and $\dd
 \begin{gather*}
 	\ell(8\ddot{\theta_1} + 3\ddot{\theta_2}\cos(\theta_1 - \theta_2) - 3\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})) + 3\ell\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) + 9g\sin(\theta_1) =  0 \\
 	\ell(2\ddot{\theta_2} + 3\ddot{\theta_1}\cos(\theta_1 - \theta_2) - 3\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})) - 3\ell\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) + 3g\sin(\theta_2) = 0 \\
+	\text{Let } S_1(\theta_1, \theta_2, \dot{\theta_1}, \dot{\theta_2}) = \frac{3\ell\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) - 3\ell\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 9g\sin(\theta_1)}{\ell} \\
+	\text{Let } S_2(\theta_1, \theta_2, \dot{\theta_1}, \dot{\theta_2})  = \frac{3\ell\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) + 3\ell\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g\sin(\theta_2)}{\ell} \\
+	8\ddot{\theta_1} + 3\ddot{\theta_2}\cos(\theta_1 - \theta_2) = S_1 \\
+	2\ddot{\theta_2} + 3\ddot{\theta_1}\cos(\theta_1 - \theta_2) = S_2 \\
+	\ddot{\theta_1} = \frac{S_1 - 3\ddot{\theta_2}}{8} \\
+	2\ddot{\theta_2} + \frac38S_1\cos(\theta_1 - \theta_2) - \frac98\ddot{\theta_2}\cos(\theta_1 - \theta_2) = S_2 \\
+	\ddot{\theta_2} = \frac{8S_2 - 3S_1\cos(\theta_1 - \theta_2)}{16 - 8\cos(\theta_1 - \theta_2)} \\
+	\ddot{\theta_2} = \frac{S_2 - 3\ddot{\theta_1}\cos(\theta_1 - \theta_2)}{2} \\
+	\ddot{\theta_1} = \frac{2S_1 - 3S_2 - 9\ddot{\theta_1}\cos(\theta_1 - \theta_2)}{16} \\
+	\ddot{\theta_1} + \frac{9}{16}\ddot{\theta_1}\cos(\theta_1 - \theta_2) = \frac{2S_1 - 3S_2}{16} \\
+	\ddot{\theta_1} = \frac{2S_1 - 3S_2}{16 + 9\cos(\theta_1 - \theta_2)} \\
 \end{gather*}
+
+We now have a pair of second order differential equations that describes the motion of the system. Using the Runge-Kutta method (aka RK4), we can approximate solutions for $\theta_1$ and $\theta_2$ over some time interval. First, let us redefine this system as a single vector function:
+
+\begin{gather*}
+	\theta = 
+	\begin{bmatrix}
+		\theta_1 \\
+		\theta_2
+	\end{bmatrix} \text{, }
+	\dot{\theta} = 
+	\begin{bmatrix}
+		\dot{\theta_1} \\
+		\dot{\theta_2}
+	\end{bmatrix} \text{, and }
+	\ddot{\theta} =
+	\begin{bmatrix}
+		\ddot{\theta_1} \\
+		\ddot{\theta_2}
+	\end{bmatrix} \\
+	\ddot{\theta}(\theta, \dot{\theta}) =
+	\begin{bmatrix}
+		\frac{2S_1 - 3S_2}{16 + 9\cos(\theta_1 - \theta_2)} \\
+		\frac{8S_2 - 3S_1\cos(\theta_1 - \theta_2)}{16 - 8\cos(\theta_1 - \theta_2)}
+	\end{bmatrix}
+\end{gather*}
+
+Now we will set up the RK4 method for this system.
+
+\begin{gather*}
+	\text{Let } z = \dot{\theta}(\theta, \dot{\theta}) = \diff{\theta}{t} \text{, so } \diff{z}{t} = \ddot{\theta} \\
+	z = \dot{\theta} \\
+	\dot{z} = \ddot{\theta}(\theta, \dot{\theta}) \\
+	\theta_{new} = \theta + \frac{h}{6}(k_0 + 2k_1 + 2k_2 + k_3) \\
+	\dot{\theta}_{new} = \dot{\theta} + \frac{h}{6}(l_0 + 2l_1 + 2l_2 + l_3) \\
+	\text{Let our step be $h$, and $k$ and $l$ are as follows:}\\
+	k_0 = hz = h\dot{\theta}_0 \\
+	l_0 = h\dot{z} = h\ddot{\theta}_0 \\
+	k_1 = hz(\theta_0 + \frac{k_0}{2}, \dot{\theta}_0 + \frac{l_0}{2}) = h\cdot(\dot{\theta}_0 + \frac{l_0}{2}) \\
+	l_1 = h\dot{z}(\theta_0 + \frac{k_0}{2}, \dot{\theta}_0 + \frac{l_0}{2}) = h\cdot\ddot{\theta}(\theta_0 + \frac{k_0}{2}, \dot{\theta}_0 + \frac{l_0}{2}) \\
+	k_2 = hz(\theta_0 + \frac{k_1}{2}, \dot{\theta}_0 + \frac{l_1}{2}) = h\cdot(\dot{\theta}_0 + \frac{l_1}{2}) \\
+	l_2 = h\dot{z}(\theta_0 + \frac{k_1}{2}, \dot{\theta}_0 + \frac{l_1}{2}) = h\cdot\ddot{\theta}(\theta_0 + \frac{k_1}{2}, \dot{\theta}_0 + \frac{l_1}{2}) \\
+	k_3 = hz(\theta_0 + k_2, \dot{\theta}_0 + l_2) = h\cdot(\dot{\theta}_0 + l_2) \\
+	l_3 = h\dot{z}(\theta_0 + k_2, \dot{\theta}_0 + l_2) = h\cdot\ddot{\theta}(\theta_0 + k_2, \dot{\theta}_0 + l_2)
+\end{gather*}
+
+Implementing this in code will get us our simulation. Hopefully.
 
 \end{document}
