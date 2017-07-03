@@ -36,7 +36,7 @@ y_1 = -\frac{\ell_1}{2}\cos(\theta_1) \\
 x_2 = \ell_1\sin(\theta_1) + \frac{\ell_2}{2}\sin(\theta_2) \\
 y_2 = -\ell_1\cos(\theta_1) - \frac{\ell_2}{2}\cos(\theta_2)
 \end{gather*}
-In order to find the linear velocity , we can use the good old Pythagorean theorem to figure out that $v = \sqrt{\dot{x}^2 + \dot{y}^2}$, or, even more conveniently, that $v^2 = \dot{x}^2 + \dot{y}^2$ for each stick. Let's do that:
+In order to find the linear velocity, we can use the good old Pythagorean theorem to figure out that $v = \sqrt{\dot{x}^2 + \dot{y}^2}$, or, even more conveniently, that $v^2 = \dot{x}^2 + \dot{y}^2$ for each stick. Let's do that:
 \begin{gather*}
 	v_1^2 = \dot{x_1}^2 + \dot{y_1}^2 = (\dot{\theta_1} \frac{\ell_1}{2}\cos(\theta_1))^2 + (\dot{\theta_1} \frac{\ell_1}{2}\sin(\theta_1))^2 = \frac{\dot{\theta_1}^2\ell_1^2}{4}\\
 	v_2^2 = \dot{x_2}^2 + \dot{y_2}^2 = (\dot{\theta_1}\ell_1\cos(\theta_1) + \dot{\theta_2}\frac{\ell_2}{2}\cos(\theta_2))^2 + (\dot{\theta_1}\ell_1\sin(\theta_1) + \dot{\theta_2}\frac{\ell_2}{2}\sin(\theta_2))^2 \\
@@ -61,13 +61,13 @@ In order to find the Lagrangian of the system, we must also describe the potenti
 \begin{gather*}
 	U_g = \sum mg\Delta h = m_1gy_1 + m_2gy_2 \\
 	= -\frac{\ell_1m_1g}{2}\cos(\theta_1) - m_2g(\ell_1\cos(\theta_1) + \frac{\ell_2}{2}\cos(\theta_2)) \\
-	= -g\cdot\frac{l_1m_1\cos(\theta_1) + 2m_2\ell_1\cos(\theta_1) + m_2\ell_2\cos(\theta_2)}{2} \\
-	= -g\cdot\frac{(l_1m_1 + 2m_2\ell_1)\cos(\theta_1) + m_2\ell_2\cos(\theta_2)}{2}
+	= -g\cdot\frac{\ell_1m_1\cos(\theta_1) + 2m_2\ell_1\cos(\theta_1) + m_2\ell_2\cos(\theta_2)}{2} \\
+	= -g\cdot\frac{(\ell_1m_1 + 2m_2\ell_1)\cos(\theta_1) + m_2\ell_2\cos(\theta_2)}{2}
 \end{gather*}
 
 Now that we have calculated the kinetic and potential energies of the system, we can calculate the Lagrangian, $\lagr = T - V$, where $T$ is the total kinetic energy and $V$ is the total potential energy:
 \begin{gather*}
-	\lagr = T - V = \frac{m_1\dot{\theta_1}^2\ell_1^2 + m_2\ell_2^2\dot{\theta_2}^2 + 3m_2\ell_1^2\dot{\theta_1}^2 + 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)}{6} \\ + g\cdot\frac{(l_1m_1 + 2m_2\ell_1)\cos(\theta_1) + m_2\ell_2\cos(\theta_2)}{2}
+	\lagr = T - V = \frac{m_1\dot{\theta_1}^2\ell_1^2 + m_2\ell_2^2\dot{\theta_2}^2 + 3m_2\ell_1^2\dot{\theta_1}^2 + 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)}{6} \\ + g\cdot\frac{(\ell_1m_1 + 2m_2\ell_1)\cos(\theta_1) + m_2\ell_2\cos(\theta_2)}{2}
 \end{gather*}
 
 With the Lagrangian, we can set up the Euler-Lagrange differential equation for each coordinate:
@@ -75,7 +75,7 @@ With the Lagrangian, we can set up the Euler-Lagrange differential equation for 
 	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_i}} = \frac{\partial \lagr}{\partial \theta_i} \\
 	\frac{\partial \lagr}{\partial \dot{\theta_1}} = \frac{2m_1\dot{\theta_1}\ell_1^2 + 6m_2\ell_1^2\dot{\theta_1} + 3m_2\ell_1\ell_2\dot{\theta_2}\cos(\theta_1 - \theta_2)}{6} \\
 	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_1}} =  \frac{2m_1\ddot{\theta_1}\ell_1^2 + 6m_2\ell_1^2\ddot{\theta_1} + 3m_2\ell_1\ell_2\ddot{\theta_2}\cos(\theta_1 - \theta_2) - 3m_2\ell_1\ell_2\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})}{6} \\
-	\frac{\partial \lagr}{\partial \theta_1} = -\frac{m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2)}{2} - g\cdot\frac{(l_1m_1 + 2m_2\ell_1)\sin(\theta_1)}{2} \\
+	\frac{\partial \lagr}{\partial \theta_1} = -\frac{m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2)}{2} - g\cdot\frac{(\ell_1m_1 + 2m_2\ell_1)\sin(\theta_1)}{2} \\
 \end{gather*}
 
 \begin{gather*}
@@ -88,12 +88,12 @@ We can now solve these two differential equations for $\ddot{\theta_1}$ and $\dd
 
 \begin{gather*}
 	(2m_1\ell_1^2 + 6m_2\ell_1^2)\ddot{\theta_1} + 3m_2\ell_1\ell_2\cos(\theta_1 - \theta_2)\ddot{\theta_2} \\
-	= 3 m_2\ell_1\ell_2\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) - 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g(l_1m_1 + 2m_2\ell_1)\sin(\theta_1) \\
+	= 3 m_2\ell_1\ell_2\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) - 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g(\ell_1m_1 + 2m_2\ell_1)\sin(\theta_1) \\
 	3m_2\ell_1\ell_2\cos(\theta_1 - \theta_2)\ddot{\theta_1} + 2m_2\ell_2^2\ddot{\theta_2} \\ 
 	= 3m_2\ell_1\ell_2\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) + 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g m_2\ell_2\sin(\theta_2) \\
 	\text{We will find the two $\ddot{\theta}$'s using a matrix solution} \\
 	\vec{b} = \begin{bmatrix}
-		3 m_2\ell_1\ell_2\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) - 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g(l_1m_1 + 2m_2\ell_1)\sin(\theta_1) \\
+		3 m_2\ell_1\ell_2\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) - 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g(\ell_1m_1 + 2m_2\ell_1)\sin(\theta_1) \\
 		3m_2\ell_1\ell_2\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) + 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g m_2\ell_2\sin(\theta_2)
 	\end{bmatrix} \\
 	\boldsymbol{A} = \begin{bmatrix}
@@ -131,14 +131,14 @@ Now we will set up the RK4 method for this system.
 	z = \dot{\theta} \\
 	\dot{z} = \ddot{\theta}(\theta, \dot{\theta}) \\
 	\theta_{new} = \theta + \frac{h}{6}(k_0 + 2k_1 + 2k_2 + k_3) \\
-	\dot{\theta}_{new} = \dot{\theta} + \frac{h}{6}(l_0 + 2l_1 + 2l_2 + l_3) \\
+	\dot{\theta}_{new} = \dot{\theta} + \frac{h}{6}(l_0 + 2\ell_1 + 2l_2 + l_3) \\
 	\text{Let our step be $h$, and $k$ and $l$ are as follows:}\\
 	k_0 = hz = h\dot{\theta}_0 \\
 	l_0 = h\dot{z} = h\ddot{\theta}_0 \\
 	k_1 = hz(\theta_0 + \frac{k_0}{2}, \dot{\theta}_0 + \frac{l_0}{2}) = h\cdot(\dot{\theta}_0 + \frac{l_0}{2}) \\
-	l_1 = h\dot{z}(\theta_0 + \frac{k_0}{2}, \dot{\theta}_0 + \frac{l_0}{2}) = h\cdot\ddot{\theta}(\theta_0 + \frac{k_0}{2}, \dot{\theta}_0 + \frac{l_0}{2}) \\
-	k_2 = hz(\theta_0 + \frac{k_1}{2}, \dot{\theta}_0 + \frac{l_1}{2}) = h\cdot(\dot{\theta}_0 + \frac{l_1}{2}) \\
-	l_2 = h\dot{z}(\theta_0 + \frac{k_1}{2}, \dot{\theta}_0 + \frac{l_1}{2}) = h\cdot\ddot{\theta}(\theta_0 + \frac{k_1}{2}, \dot{\theta}_0 + \frac{l_1}{2}) \\
+	\ell_1 = h\dot{z}(\theta_0 + \frac{k_0}{2}, \dot{\theta}_0 + \frac{l_0}{2}) = h\cdot\ddot{\theta}(\theta_0 + \frac{k_0}{2}, \dot{\theta}_0 + \frac{l_0}{2}) \\
+	k_2 = hz(\theta_0 + \frac{k_1}{2}, \dot{\theta}_0 + \frac{\ell_1}{2}) = h\cdot(\dot{\theta}_0 + \frac{\ell_1}{2}) \\
+	l_2 = h\dot{z}(\theta_0 + \frac{k_1}{2}, \dot{\theta}_0 + \frac{\ell_1}{2}) = h\cdot\ddot{\theta}(\theta_0 + \frac{k_1}{2}, \dot{\theta}_0 + \frac{\ell_1}{2}) \\
 	k_3 = hz(\theta_0 + k_2, \dot{\theta}_0 + l_2) = h\cdot(\dot{\theta}_0 + l_2) \\
 	l_3 = h\dot{z}(\theta_0 + k_2, \dot{\theta}_0 + l_2) = h\cdot\ddot{\theta}(\theta_0 + k_2, \dot{\theta}_0 + l_2)
 \end{gather*}
