@@ -23,8 +23,6 @@ struct Pendulum {
     double velocity;
 };
 
-std::ostream& operator<<(std::ostream& os, const Pendulum& p) {
-    return os << "(" << p.theta << ", " << p.velocity << ")";
-}
+std::ostream& operator<<(std::ostream& os, const Pendulum& p);
 
 #endif /* Pendulum_hpp */

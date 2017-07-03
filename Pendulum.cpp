@@ -16,3 +16,7 @@ Pendulum::Pendulum(double width, double length, double mass, double theta_i, dou
     this->theta = theta_i;
     this->velocity = vel_i;
 }
+
+std::ostream& operator<<(std::ostream& os, const Pendulum& p) {
+    return os << "(" << p.theta << ", " << p.velocity << ")";
+}
