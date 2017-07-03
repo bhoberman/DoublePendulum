@@ -25,82 +25,82 @@ As it turns out, the double pendulum is pretty complex. For now, I am modeling a
 	\includegraphics[height=5cm]{situation}
 	\caption{A crude image of this double pendulum}
 \end{figure}
-Each of the sticks of this pendulum has length $\ell$ and mass $m$. $\theta_1$ represents the rotation of the stick attached to the anchor with respect to the vertical, and $\theta_2$ represents the rotation of the other stick, also relative to the vertical. In order to write the Lagrangian for this system, we need to find a way to express its kinetic and potential energies. We will be using $\theta_1$ and $\theta_2$ as the two coordinates that describe this system, so we will work to express everything in terms of $\theta$'s.
+$\theta_1$ represents the rotation of the stick attached to the anchor with respect to the vertical, and $\theta_2$ represents the rotation of the other stick, also relative to the vertical. Each stick has length $\ell_1$ and $\ell_2$ and mass $m_1$ and $m_2$. In order to write the Lagrangian for this system, we need to find a way to express its kinetic and potential energies. We will be using $\theta_1$ and $\theta_2$ as the two coordinates that describe this system, so we will work to express everything in terms of $\theta$'s.
 
 The two sticks are the only elements of the system that account for its kinetic energy. Each stick has a component of linear and rotational kinetic energy, $\frac{1}{2}mv^2$ and $\frac{1}{2}I\dot{\theta}^2$. The rotational energy is with respect to the center of mass of each stick.
 
 In order to calculate the speed of the center of mass of each stick, we must do some math. The cartesian coordinates of the centers of mass of the two sticks are as follows:
 \begin{gather*}
-x_1 = \frac{\ell}{2}\sin(\theta_1) \\
-y_1 = -\frac{\ell}{2}\cos(\theta_1) \\
-x_2 = \ell \sin(\theta_1) + \frac{\ell}{2} \sin(\theta_2) = \ell (\sin(\theta_1) + \frac{1}{2}\sin(\theta_2)) \\
-y_2 = -\ell \cos(\theta_1) - \frac{\ell}{2} \cos(\theta_2) = -\ell (\cos(\theta_1) + \frac{1}{2} \cos(\theta_2))
+x_1 = \frac{\ell_1}{2}\sin(\theta_1) \\
+y_1 = -\frac{\ell_1}{2}\cos(\theta_1) \\
+x_2 = \ell_1\sin(\theta_1) + \frac{\ell_2}{2}\sin(\theta_2) \\
+y_2 = -\ell_1\cos(\theta_1) - \frac{\ell_2}{2}\cos(\theta_2)
 \end{gather*}
 In order to find the linear velocity , we can use the good old Pythagorean theorem to figure out that $v = \sqrt{\dot{x}^2 + \dot{y}^2}$, or, even more conveniently, that $v^2 = \dot{x}^2 + \dot{y}^2$ for each stick. Let's do that:
 \begin{gather*}
-	v_1^2 = \dot{x_1}^2 + \dot{y_1}^2 = (\dot{\theta_1} \frac{\ell}{2}\cos(\theta_1))^2 + (\dot{\theta_1} \frac{\ell}{2}\sin(\theta_1))^2 = \dot{\theta_1}^2 \frac{\ell^2}{4} \cdot (\cos^2(\theta_1) + \sin^2(\theta_1)) = \dot{\theta_1}^2 \frac{\ell^2}{4} \\
-	v_2^2 = \dot{x_2}^2 + \dot{y_2}^2 = \ell^2(\dot{\theta_1}^2 \cos^2(\theta_1) + \frac{\dot{\theta_2}^2}{4}\cos^2(\theta_2) + \dot{\theta_1}\dot{\theta_2}\cos(\theta_1)\cos(\theta_2) \\ + \ell^2(\dot{\theta_1}^2\sin^2(\theta_1) + \frac{\dot{\theta_2}^2}{4}\sin^2(\theta_2) + \dot{\theta_1}\dot{\theta_2}\sin(\theta_1)\sin(\theta_2)) \\
-	= \ell^2 (\dot{\theta_1}^2 + \frac{\dot{\theta_2}^2}{4} + \dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) \\
-	v_1^2 + v_2^2 = \ell^2(\frac{5}{4}\dot{\theta_1}^2 + \frac{1}{4}\dot{\theta_2}^2 + \dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) \\
-	K_{linear} = \frac{1}{2}mv_1^2 + \frac{1}{2}mv_2^2 = \frac{1}{2}m(v_1^2 + v_2^2) = \frac{1}{2}m\ell^2(\frac{5}{4}\dot{\theta_1}^2 + \frac{1}{4}\dot{\theta_2}^2 + \dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) \\ = \frac{1}{8}m\ell^2(5\dot{\theta_1}^2 + \dot{\theta_2}^2 + 4\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2))
+	v_1^2 = \dot{x_1}^2 + \dot{y_1}^2 = (\dot{\theta_1} \frac{\ell_1}{2}\cos(\theta_1))^2 + (\dot{\theta_1} \frac{\ell_1}{2}\sin(\theta_1))^2 = \frac{\dot{\theta_1}^2\ell_1^2}{4}\\
+	v_2^2 = \dot{x_2}^2 + \dot{y_2}^2 = (\dot{\theta_1}\ell_1\cos(\theta_1) + \dot{\theta_2}\frac{\ell_2}{2}\cos(\theta_2))^2 + (\dot{\theta_1}\ell_1\sin(\theta_1) + \dot{\theta_2}\frac{\ell_2}{2}\sin(\theta_2))^2 \\
+	= \frac{\ell_2^2\dot{\theta_2}^2}{4} + \ell_1^2\dot{\theta_1}^2 + \ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)\\
+	K_{linear} = \frac{1}{2}m_1v_1^2 + \frac{1}{2}m_2v_2^2 \\
+	= \frac{m_1\dot{\theta_1}^2\ell_1^2}{8} + \frac{m_2\ell_2^2\dot{\theta_2}^2 +4m_2\ell_1^2\dot{\theta_1}^2 + 4m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)}{8}
 \end{gather*}
-Because out selected independent coordinates describing the system are $\theta_1$ and $\theta_2$, describing the rotational kinetic energy of the system is much more simple. For each stick, $K_{rot} = \frac12 I \dot{\theta}^2 = \frac12 I (\dot{\theta_1}^2 + \dot{\theta_2}^2)$. Each stick's moment of inertia about its center of mass is $\frac{1}{12} m \ell^2$, so $K_{rot} = \frac{1}{24}m\ell^2(\dot{\theta_1}^2 + \dot{\theta_2}^2)$.
+Because our selected independent coordinates describing the system are $\theta_1$ and $\theta_2$, describing the rotational kinetic energy of the system is much more simple. For each stick, $K_{rot} = \frac12 I \dot{\theta}^2$. Each stick's moment of inertia about its center of mass is $\frac{1}{12} m \ell^2$, so:
+\begin{gather*}
+	K_{rot} = \frac12I_1\dot{\theta_1}^2 + \frac12I_2\dot{\theta_2}^2 = \frac{m_1\ell_1^2\dot{\theta_1}^2}{24} + \frac{m_2\ell_2^2\dot{\theta_2}^2}{24}
+\end{gather*}
 
 We can now find the total kinetic energy of the system:
 \begin{gather*}
-	K = K_{linear} + K_{rot} = \frac{1}{8}m\ell^2(5\dot{\theta_1}^2 + \dot{\theta_2}^2 + 4\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) + \frac{1}{24}m\ell^2(\dot{\theta_1}^2 + \dot{\theta_2}^2) \\
-	= \frac{1}{24}m\ell^2(15\dot{\theta_1}^2 + 3\dot{\theta_2}^2 + 12\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2) + \dot{\theta_1}^2 + \dot{\theta_2}^2) \\
-	= \frac{1}{24}m\ell^2(16\dot{\theta_1}^2 + 4\dot{\theta_2}^2 + 12\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2) ) \\
-	= \frac16m\ell^2(4\dot{\theta_1}^2 + \dot{\theta_2}^2 + 3\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2))
+	K = K_{linear} + K_{rot} \\
+	= \frac{3m_1\dot{\theta_1}^2\ell_1^2}{24} + \frac{3m_2\ell_2^2\dot{\theta_2}^2 +12m_2\ell_1^2\dot{\theta_1}^2 + 12m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)}{24} + \frac{m_1\ell_1^2\dot{\theta_1}^2}{24} + \frac{m_2\ell_2^2\dot{\theta_2}^2}{24} \\
+	= \frac{4m_1\dot{\theta_1}^2\ell_1^2}{24} + \frac{4m_2\ell_2^2\dot{\theta_2}^2 +12m_2\ell_1^2\dot{\theta_1}^2 + 12m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)}{24} \\
+	= \frac{m_1\dot{\theta_1}^2\ell_1^2 + m_2\ell_2^2\dot{\theta_2}^2 + 3m_2\ell_1^2\dot{\theta_1}^2 + 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)}{6}
 \end{gather*}
 
 In order to find the Lagrangian of the system, we must also describe the potential energy of the system at any given time. Gravitational potential energy accounts for the potential energy in this system, so let us describe the gravitational potential energy of the system with respect to the bottom position, where $\theta_1 = \theta_2 = 0$:
 \begin{gather*}
-	U_g = \sum mg\Delta h = mg(\Delta h_1 + \Delta h_2) = mg(y_1 + y_2) \\
-	= mg(-\frac{\ell}{2}\cos(\theta_1)- \ell (\cos(\theta_1) + \frac{1}{2} \cos(\theta_2))) \\
-	= mg\ell(-\frac32\cos(\theta_1) - \frac12\cos(\theta_2)) = -\frac12 mg\ell(3\cos(\theta_1) + \cos(\theta_2))
+	U_g = \sum mg\Delta h = m_1gy_1 + m_2gy_2 \\
+	= -\frac{\ell_1m_1g}{2}\cos(\theta_1) - m_2g(\ell_1\cos(\theta_1) + \frac{\ell_2}{2}\cos(\theta_2)) \\
+	= -g\cdot\frac{l_1m_1\cos(\theta_1) + 2m_2\ell_1\cos(\theta_1) + m_2\ell_2\cos(\theta_2)}{2} \\
+	= -g\cdot\frac{(l_1m_1 + 2m_2\ell_1)\cos(\theta_1) + m_2\ell_2\cos(\theta_2)}{2}
 \end{gather*}
 
 Now that we have calculated the kinetic and potential energies of the system, we can calculate the Lagrangian, $\lagr = T - V$, where $T$ is the total kinetic energy and $V$ is the total potential energy:
 \begin{gather*}
-	\lagr = T - V = \frac16m\ell^2(4\dot{\theta_1}^2 + \dot{\theta_2}^2 + 3\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) + \frac12 mg\ell(3\cos(\theta_1) + \cos(\theta_2))
+	\lagr = T - V = \frac{m_1\dot{\theta_1}^2\ell_1^2 + m_2\ell_2^2\dot{\theta_2}^2 + 3m_2\ell_1^2\dot{\theta_1}^2 + 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)}{6} \\ + g\cdot\frac{(l_1m_1 + 2m_2\ell_1)\cos(\theta_1) + m_2\ell_2\cos(\theta_2)}{2}
 \end{gather*}
 
 With the Lagrangian, we can set up the Euler-Lagrange differential equation for each coordinate:
 \begin{gather*}
-	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_i}} - \frac{\partial \lagr}{\partial \theta_i} = 0 \\
-	\frac{\partial \lagr}{\partial \dot{\theta_1}} = \frac{\partial}{\partial \dot{\theta_1}}(\frac16m\ell^2(4\dot{\theta_1}^2 + \dot{\theta_2}^2 + 3\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) + \frac12 mg\ell(3\cos(\theta_1) + \cos(\theta_2))) \\
-	\frac{\partial \lagr}{\partial \dot{\theta_1}} = \frac16m\ell^2(8\dot{\theta_1} + 3\dot{\theta_2}\cos(\theta_1 - \theta_2)) \\
-	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_1}} = \diff{}{t}(\frac16m\ell^2(8\dot{\theta_1} + 3\dot{\theta_2}\cos(\theta_1 - \theta_2))) = \frac16m\ell^2(8\ddot{\theta_1} + 3\ddot{\theta_2}\cos(\theta_1 - \theta_2) - 3\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})) \\
-	\frac{\partial \lagr}{\partial \theta_1} = \frac{\partial}{\partial \theta_1} (\frac16m\ell^2(4\dot{\theta_1}^2 + \dot{\theta_2}^2 + 3\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) + \frac12 mg\ell(3\cos(\theta_1) + \cos(\theta_2))) \\
-	\frac{\partial \lagr}{\partial \theta_1} = -\frac12m\ell^2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - \frac32m g \ell \sin(\theta_1) \\
-	\frac16m\ell^2(8\ddot{\theta_1} + 3\ddot{\theta_2}\cos(\theta_1 - \theta_2) - 3\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})) + \frac12m\ell^2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) + \frac32m g \ell \sin(\theta_1) =  0
+	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_i}} = \frac{\partial \lagr}{\partial \theta_i} \\
+	\frac{\partial \lagr}{\partial \dot{\theta_1}} = \frac{2m_1\dot{\theta_1}\ell_1^2 + 6m_2\ell_1^2\dot{\theta_1} + 3m_2\ell_1\ell_2\dot{\theta_2}\cos(\theta_1 - \theta_2)}{6} \\
+	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_1}} =  \frac{2m_1\ddot{\theta_1}\ell_1^2 + 6m_2\ell_1^2\ddot{\theta_1} + 3m_2\ell_1\ell_2\ddot{\theta_2}\cos(\theta_1 - \theta_2) - 3m_2\ell_1\ell_2\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})}{6} \\
+	\frac{\partial \lagr}{\partial \theta_1} = -\frac{m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2)}{2} - g\cdot\frac{(l_1m_1 + 2m_2\ell_1)\sin(\theta_1)}{2} \\
 \end{gather*}
 
 \begin{gather*}
-	\frac{\partial \lagr}{\partial \dot{\theta_2}} = \frac{\partial}{\partial \dot{\theta_2}}(\frac16m\ell^2(4\dot{\theta_1}^2 + \dot{\theta_2}^2 + 3\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) + \frac12 mg\ell(3\cos(\theta_1) + \cos(\theta_2))) \\= \frac16m\ell^2(2\dot{\theta_2} + 3\dot{\theta_1}\cos(\theta_1 - \theta_2)) \\
-	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_2}} = \diff{}{t}(\frac16m\ell^2(2\dot{\theta_2} + 3\dot{\theta_1}\cos(\theta_1 - \theta_2))) = \frac16m\ell^2(2\ddot{\theta_2} + 3\ddot{\theta_1}\cos(\theta_1 - \theta_2) - 3\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})) \\
-	\frac{\partial \lagr}{\partial \theta_2} = \frac{\partial}{\partial \theta_2}(\frac16m\ell^2(4\dot{\theta_1}^2 + \dot{\theta_2}^2 + 3\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)) + \frac12 mg\ell(3\cos(\theta_1) + \cos(\theta_2))) \\
-	= \frac12m\ell^2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - \frac12mg\ell\sin(\theta_2) \\
-	\frac16m\ell^2(2\ddot{\theta_2} + 3\ddot{\theta_1}\cos(\theta_1 - \theta_2) - 3\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})) - \frac12m\ell^2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) + \frac12mg\ell\sin(\theta_2) = 0
+	\frac{\partial \lagr}{\partial \dot{\theta_2}} = \frac{2m_2\ell_2^2\dot{\theta_2} + 3m_2\ell_1\ell_2\dot{\theta_1}\cos(\theta_1 - \theta_2)}{6} \\
+	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_2}} = \frac{2m_2\ell_2^2\ddot{\theta_2} + 3m_2\ell_1\ell_2\ddot{\theta_1}\cos(\theta_1 - \theta_2) - 3m_2\ell_1\ell_2\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})}{6} \\
+	\frac{\partial \lagr}{\partial \theta_2} = \frac{m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2)}{2} - g\cdot\frac{m_2\ell_2\sin(\theta_2)}{2}
 \end{gather*}
 
 We can now solve these two differential equations for $\ddot{\theta_1}$ and $\ddot{\theta_2}$, which together will be used in our simulation.
 
 \begin{gather*}
-	\ell(8\ddot{\theta_1} + 3\ddot{\theta_2}\cos(\theta_1 - \theta_2) - 3\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})) + 3\ell\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) + 9g\sin(\theta_1) =  0 \\
-	\ell(2\ddot{\theta_2} + 3\ddot{\theta_1}\cos(\theta_1 - \theta_2) - 3\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})) - 3\ell\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) + 3g\sin(\theta_2) = 0 \\
-	\text{Let } S_1(\theta_1, \theta_2, \dot{\theta_1}, \dot{\theta_2}) = \frac{3\ell\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) - 3\ell\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 9g\sin(\theta_1)}{\ell} \\
-	\text{Let } S_2(\theta_1, \theta_2, \dot{\theta_1}, \dot{\theta_2})  = \frac{3\ell\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) + 3\ell\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g\sin(\theta_2)}{\ell} \\
-	8\ddot{\theta_1} + 3\ddot{\theta_2}\cos(\theta_1 - \theta_2) = S_1 \\
-	2\ddot{\theta_2} + 3\ddot{\theta_1}\cos(\theta_1 - \theta_2) = S_2 \\
-	\ddot{\theta_1} = \frac{S_1 - 3\ddot{\theta_2}}{8} \\
-	2\ddot{\theta_2} + \frac38S_1\cos(\theta_1 - \theta_2) - \frac98\ddot{\theta_2}\cos(\theta_1 - \theta_2) = S_2 \\
-	\ddot{\theta_2} = \frac{8S_2 - 3S_1\cos(\theta_1 - \theta_2)}{16 - 8\cos(\theta_1 - \theta_2)} \\
-	\ddot{\theta_2} = \frac{S_2 - 3\ddot{\theta_1}\cos(\theta_1 - \theta_2)}{2} \\
-	\ddot{\theta_1} = \frac{2S_1 - 3S_2 - 9\ddot{\theta_1}\cos(\theta_1 - \theta_2)}{16} \\
-	\ddot{\theta_1} + \frac{9}{16}\ddot{\theta_1}\cos(\theta_1 - \theta_2) = \frac{2S_1 - 3S_2}{16} \\
-	\ddot{\theta_1} = \frac{2S_1 - 3S_2}{16 + 9\cos(\theta_1 - \theta_2)} \\
+	(2m_1\ell_1^2 + 6m_2\ell_1^2)\ddot{\theta_1} + 3m_2\ell_1\ell_2\cos(\theta_1 - \theta_2)\ddot{\theta_2} \\
+	= 3 m_2\ell_1\ell_2\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) - 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g(l_1m_1 + 2m_2\ell_1)\sin(\theta_1) \\
+	3m_2\ell_1\ell_2\cos(\theta_1 - \theta_2)\ddot{\theta_1} + 2m_2\ell_2^2\ddot{\theta_2} \\ 
+	= 3m_2\ell_1\ell_2\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) + 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g m_2\ell_2\sin(\theta_2) \\
+	\text{We will find the two $\ddot{\theta}$'s using a matrix solution} \\
+	\vec{b} = \begin{bmatrix}
+		3 m_2\ell_1\ell_2\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) - 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g(l_1m_1 + 2m_2\ell_1)\sin(\theta_1) \\
+		3m_2\ell_1\ell_2\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) + 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g m_2\ell_2\sin(\theta_2)
+	\end{bmatrix} \\
+	\boldsymbol{A} = \begin{bmatrix}
+		2m_1\ell_1^2 + 6m_2\ell_1^2 & 3m_2\ell_1\ell_2\cos(\theta_1 - \theta_2) \\
+		3m_2\ell_1\ell_2\cos(\theta_1 - \theta_2) & 2m_2\ell_2^2
+	\end{bmatrix} \\
+	\vec{\ddot{\theta}} = \boldsymbol{A}^{-1}\vec{b}
 \end{gather*}
 
 We now have a pair of second order differential equations that describes the motion of the system. Using the Runge-Kutta method (aka RK4), we can approximate solutions for $\theta_1$ and $\theta_2$ over some time interval. First, let us redefine this system as a single vector function:
@@ -121,11 +121,7 @@ We now have a pair of second order differential equations that describes the mot
 		\ddot{\theta_1} \\
 		\ddot{\theta_2}
 	\end{bmatrix} \\
-	\ddot{\theta}(\theta, \dot{\theta}) =
-	\begin{bmatrix}
-		\frac{2S_1 - 3S_2}{16 + 9\cos(\theta_1 - \theta_2)} \\
-		\frac{8S_2 - 3S_1\cos(\theta_1 - \theta_2)}{16 - 8\cos(\theta_1 - \theta_2)}
-	\end{bmatrix}
+	\ddot{\theta}(\theta, \dot{\theta}) = \boldsymbol{A}^{-1}\vec{b}\text{, according to $\boldsymbol{A}(\theta, \dot{\theta})$ and $\vec{b}(\theta, \dot{\theta})$ above}
 \end{gather*}
 
 Now we will set up the RK4 method for this system.
