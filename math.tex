@@ -64,9 +64,9 @@ In order to find the Lagrangian of the system, we must also describe the potenti
 	= -g\cdot\frac{(\ell_1m_1 + 2m_2\ell_1)\cos(\theta_1) + m_2\ell_2\cos(\theta_2)}{2}
 \end{gather*}
 
-Now that we have calculated the kinetic and potential energies of the system, we can calculate the Lagrangian, $\lagr = T - V$, where $T$ is the total kinetic energy and $V$ is the total potential energy:
+Now that we have calculated the kinetic and potential energies of the system, we can calculate the Lagrangian, $\lagr = K - V$, where $K$ is the total kinetic energy and $V$ is the total potential energy:
 \begin{gather*}
-	\lagr = T - V = \frac{m_1\dot{\theta_1}^2\ell_1^2 + m_2\ell_2^2\dot{\theta_2}^2 + 3m_2\ell_1^2\dot{\theta_1}^2 + 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\cos(\theta_1 - \theta_2)}{6} \\ + g\cdot\frac{(\ell_1m_1 + 2m_2\ell_1)\cos(\theta_1) + m_2\ell_2\cos(\theta_2)}{2}
+	\lagr = K - V = \frac12m_2[\dot{\theta_1}^2\ell_1^2 + \frac{\dot{\theta_2}^2\ell_2^2}{4} + \dot{\theta_1}\dot{\theta_2}\ell_1\ell_2\cos(\theta_1 - \theta_2)] + \frac16m_1\ell_1^2\dot{\theta_1}^2 + \frac{1}{24}m_2\ell_2^2\dot{\theta_2}^2 \\ + \frac{g}{2}[(\ell_1m_1 + 2m_2\ell_1)\cos(\theta_1) + m_2\ell_2\cos(\theta_2)]
 \end{gather*}
 
 With the Lagrangian, we can set up the Euler-Lagrange differential equation for each coordinate:
