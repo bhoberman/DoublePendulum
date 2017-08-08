@@ -56,7 +56,7 @@ We can now find the total kinetic energy of the system:
 	= \frac12m_2(\dot{\theta_1}^2\ell_1^2 + \frac{\dot{\theta_2}^2\ell_2^2}{4} + \dot{\theta_1}\dot{\theta_2}\ell_1\ell_2\cos(\theta_1 - \theta_2)) + \frac16m_1\ell_1^2\dot{\theta_1}^2 + \frac{1}{24}m_2\ell_2^2\dot{\theta_2}^2
 \end{gather*}
 
-In order to find the Lagrangian of the system, we must also describe the potential energy of the system at any given time. Gravitational potential energy accounts for the potential energy in this system, so let us describe the gravitational potential energy of the system with respect to the bottom position, where $\theta_1 = \theta_2 = 0$:
+In order to find the Lagrangian of the system, we must also describe the potential energy of the system at any given time. Gravitational potential energy accounts for the potential energy in this system, so let us describe the gravitational potential energy of the system. It doesn't actually matter where we pick the zero position to be, so we'll call the horizontal zero in order to simplify the expression (because $\cos(\frac{\pi}{2}) = 0$, and the horizontal is at $\frac{\pi}{2}$ in our system):
 \begin{gather*}
 	U_g = \sum mg\Delta h = m_1gy_1 + m_2gy_2 \\
 	= -\frac{\ell_1m_1g}{2}\cos(\theta_1) - m_2g(\ell_1\cos(\theta_1) + \frac{\ell_2}{2}\cos(\theta_2)) \\
@@ -72,34 +72,23 @@ Now that we have calculated the kinetic and potential energies of the system, we
 With the Lagrangian, we can set up the Euler-Lagrange differential equation for each coordinate:
 \begin{gather*}
 	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_i}} = \frac{\partial \lagr}{\partial \theta_i} \\
-	\frac{\partial \lagr}{\partial \dot{\theta_1}} = \frac{2m_1\dot{\theta_1}\ell_1^2 + 6m_2\ell_1^2\dot{\theta_1} + 3m_2\ell_1\ell_2\dot{\theta_2}\cos(\theta_1 - \theta_2)}{6} \\
-	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_1}} =  \frac{2m_1\ddot{\theta_1}\ell_1^2 + 6m_2\ell_1^2\ddot{\theta_1} + 3m_2\ell_1\ell_2\ddot{\theta_2}\cos(\theta_1 - \theta_2) - 3m_2\ell_1\ell_2\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})}{6} \\
-	\frac{\partial \lagr}{\partial \theta_1} = -\frac{m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2)}{2} - g\cdot\frac{(\ell_1m_1 + 2m_2\ell_1)\sin(\theta_1)}{2} \\
+	\frac{\partial \lagr}{\partial \dot{\theta_1}} = \frac12m_2[2\dot{\theta_1}\ell_1^2 + \dot{\theta_2}\ell_1\ell_2\cos(\theta_1 - \theta_2)] + \frac13m_1\ell_1^2\dot{\theta_1} \\
+	\diff{}{t} \frac{\partial \lagr}{\partial \dot{\theta_i}} = \frac12m_2[2\ddot{\theta_1}\ell_1^2 + \ddot{\theta_2}\ell_1\ell_2\cos(\theta_1 - \theta_2) - \dot{\theta_2}\ell_1\ell_2\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})] + \frac13m_1\ell_1^2\ddot{\theta_1} \\
+	\frac{\partial \lagr}{\partial \theta_1} = -\frac12m_2\dot{\theta_1}\dot{\theta_2}\ell_1\ell_2\sin(\theta_1 - \theta_2) - \frac{g}{2}(\ell_1m_1 + 2m_2\ell_1)\sin(\theta_1)
 \end{gather*}
 
 \begin{gather*}
-	\frac{\partial \lagr}{\partial \dot{\theta_2}} = \frac{2m_2\ell_2^2\dot{\theta_2} + 3m_2\ell_1\ell_2\dot{\theta_1}\cos(\theta_1 - \theta_2)}{6} \\
-	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_2}} = \frac{2m_2\ell_2^2\ddot{\theta_2} + 3m_2\ell_1\ell_2\ddot{\theta_1}\cos(\theta_1 - \theta_2) - 3m_2\ell_1\ell_2\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})}{6} \\
-	\frac{\partial \lagr}{\partial \theta_2} = \frac{m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2)}{2} - g\cdot\frac{m_2\ell_2\sin(\theta_2)}{2}
+	\frac{\partial \lagr}{\partial \dot{\theta_2}} = \frac12m_2[\frac{\dot{\theta_2}\ell_2^2}{2} + \dot{\theta_1}\ell_1\ell_2\cos(\theta_1 - \theta_2)] + \frac{1}{12}m_2\ell_2^2\dot{\theta_2} \\
+	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_2}} = \frac12m_2[\frac{\ddot{\theta_2}\ell_2^2}{2} + \ddot{\theta_1}\ell_1\ell_2\cos(\theta_1 - \theta_2) - \dot{\theta_1}\ell_1\ell_2\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2})] + \frac{1}{12}m_2\ell_2^2\ddot{\theta_2} \\
+	\frac{\partial \lagr}{\partial \theta_2} = \frac12m_2\dot{\theta_1}\dot{\theta_2}\ell_1\ell_2\sin(\theta_1 - \theta_2) - \frac{g}{2}m_2\ell_2\sin(\theta_2)
 \end{gather*}
 
-We can now solve these two differential equations for $\ddot{\theta_1}$ and $\ddot{\theta_2}$, which together will be used in our simulation.
+We can now solve these two differential equations for $\ddot{\theta_1}$ and $\ddot{\theta_2}$, which together will be used in our simulation. I did this using sage because attempts to do it by hand resulted in errors.
 
 \begin{gather*}
-	(2m_1\ell_1^2 + 6m_2\ell_1^2)\ddot{\theta_1} + 3m_2\ell_1\ell_2\cos(\theta_1 - \theta_2)\ddot{\theta_2} \\
-	= 3 m_2\ell_1\ell_2\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) - 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g(\ell_1m_1 + 2m_2\ell_1)\sin(\theta_1) \\
-	3m_2\ell_1\ell_2\cos(\theta_1 - \theta_2)\ddot{\theta_1} + 2m_2\ell_2^2\ddot{\theta_2} \\ 
-	= 3m_2\ell_1\ell_2\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) + 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g m_2\ell_2\sin(\theta_2) \\
-	\text{We will find the two $\ddot{\theta}$'s using a matrix solution} \\
-	\vec{b} = \begin{bmatrix}
-		3 m_2\ell_1\ell_2\dot{\theta_2}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) - 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g(\ell_1m_1 + 2m_2\ell_1)\sin(\theta_1) \\
-		3m_2\ell_1\ell_2\dot{\theta_1}\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) + 3m_2\ell_1\ell_2\dot{\theta_1}\dot{\theta_2}\sin(\theta_1 - \theta_2) - 3g m_2\ell_2\sin(\theta_2)
-	\end{bmatrix} \\
-	\boldsymbol{A} = \begin{bmatrix}
-		2m_1\ell_1^2 + 6m_2\ell_1^2 & 3m_2\ell_1\ell_2\cos(\theta_1 - \theta_2) \\
-		3m_2\ell_1\ell_2\cos(\theta_1 - \theta_2) & 2m_2\ell_2^2
-	\end{bmatrix} \\
-	\vec{\ddot{\theta}} = \boldsymbol{A}^{-1}\vec{b}
+	\ddot{\theta_1} = -\frac{3(2  \ell_2^2 m_2 {\dot{\theta_2}}^2 \sin(-\theta_1 + \theta_2) + 3  g \ell_2 m_2 \cos(-\theta_1 + \theta_2) \sin(\theta_2) + 6  g \ell_1 m_2 \sin(\theta_2) - 2  {(g \ell_2 m_1 + 2  g \ell_2 m_2)} \sin(\theta_1) + 3  {(\ell_1 \ell_2 m_2 {\dot{\theta_1}}^2 \cos(-\theta_1 + \theta_2) + 2  \ell_1^2 m_2 {\dot{\theta_1}}^2)} \sin(-\theta_1 + \theta_2))}{9  \ell_1 \ell_2 m_2 \cos(-\theta_1 + \theta_2)^2 + 18  \ell_1^2 m_2 \cos(-\theta_1 + \theta_2) - 4  \ell_1 \ell_2 m_1}
+	\\
+	\ddot{\theta_2} = \frac{3(3  \ell_2 m_2 {\dot{\theta_2}}^2 \cos(-\theta_1 + \theta_2) \sin(-\theta_1 + \theta_2) + 2  \ell_1 m_1 {\dot{\theta_1}}^2 \sin(-\theta_1 + \theta_2) - 3  {(g m_1 + 2  g m_2)} \cos(-\theta_1 + \theta_2) \sin(\theta_1) + 2  g m_1 \sin(\theta_2))}{9  \ell_2 m_2 \cos(-\theta_1 + \theta_2)^2 + 18  \ell_1 m_2 \cos(-\theta_1 + \theta_2) - 4  \ell_2 m_1}
 \end{gather*}
 
 We now have a pair of second order differential equations that describes the motion of the system. Using the Runge-Kutta method (aka RK4), we can approximate solutions for $\theta_1$ and $\theta_2$ over some time interval. First, let us redefine this system as a single vector function:
