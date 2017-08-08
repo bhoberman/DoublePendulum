@@ -5,10 +5,12 @@
 #include "Pendulum.hpp"
 
 constexpr double g = 9.807;
-constexpr double TIME_SCALE = 0.5;
+constexpr double TIME_SCALE = 1.0;
+constexpr double TIME_STEP = 0.01; //Tick length in seconds
 //Conversion from meters to pixels
 constexpr double M_TO_PX = 1500.0;
 constexpr int X_OFFSET = 400;
+constexpr int Y_OFFSET = 250;
 
 double degrees(double radians) {
     return radians * 180 / M_PI;
@@ -24,38 +26,48 @@ double translateRotation(double mathRotation) {
     return degrees(-mathRotation)+180.0;
 }
 
-Eigen::Matrix2d calculateCoefficientsMatrix(Eigen::Vector2d pos, Eigen::Vector2d vel, Eigen::Vector2d mass, Eigen::Vector2d length) {
-    using std::sin;
-    using std::cos;
-    Eigen::Matrix2d result;
-    result(0, 0) = 2*mass(0)*length(0)*length(0);
-    result(0, 1) = 3*mass(1)*length(0)*length(1)*cos(pos(0) - pos(1));
-    result(1, 0) = 3*mass(1)*length(0)*length(1)*cos(pos(0) - pos(1));
-    result(1, 1) = 2*mass(1)*length(1)*length(1);
-    return result;
-}
-
-Eigen::Vector2d calculateConstantsVector(Eigen::Vector2d pos, Eigen::Vector2d vel, Eigen::Vector2d mass, Eigen::Vector2d length) {
-    using std::sin;
-    using std::cos;
-    Eigen::Vector2d result;
-    result(0) = 3*mass(1)*length(0)*length(1)*vel(1)*sin(pos(0) - pos(1))*(vel(0) - vel(1));
-    result(0) -= 3*mass(1)*length(0)*length(1)*vel(0)*vel(1)*sin(pos(0) - pos(1));
-    result(0) -= 3*g*(length(0)*mass(0) + 2*mass(1)*length(0)*sin(pos(0)));
-    result(1) = 3*mass(1)*length(0)*length(1)*vel(0)*sin(pos(0) - pos(1))*(vel(0) - vel(1));
-    result(1) += 3*mass(1)*length(0)*length(1)*vel(0)*vel(1)*sin(pos(0) - pos(1));
-    result(1) -= 3*g*mass(1)*length(1)*sin(pos(1));
-    return result;
-}
-
 Eigen::Vector2d calculateAcceleration(Eigen::Vector2d position, Eigen::Vector2d velocity, Eigen::Vector2d mass, Eigen::Vector2d length) {
     using std::sin;
     using std::cos;
-    Eigen::Matrix2d A;
-    Eigen::Vector2d result, b;
-    A = calculateCoefficientsMatrix(position, velocity, mass, length);
-    b = calculateConstantsVector(position, velocity, mass, length);
-    result = A.inverse() * b;
+    Eigen::Vector2d result;
+    double N1, N2, D1, D2;
+    //Compute the numerator for the acceleration for theta1
+    //See math doc for where on Earth this comes from
+    N1 = 2*length(1)*length(1)*mass(1)*velocity(1)*velocity(1)*sin(position(1) - position(0));
+    N1 += 3*g*length(1)*mass(1)*cos(position(1) - position(0))*sin(position(1));
+    N1 += 6*g*length(0)*mass(1)*sin(position(1));
+    N1 -= 2*(g*length(1)*mass(0) + 2*g*length(1)*mass(1))*sin(position(0));
+    N1 += 3*(length(0)*length(1)*mass(1)*velocity(0)*velocity(0)*cos(position(1) - position(0)) + 2*length(0)*length(0)*mass(1)*velocity(0)*velocity(0))*sin(position(1) - position(0));
+    //Finally, multiply by the overall factor 3
+    N1 *= 3;
+    //Compute denominator for the acceleration for theta1
+    D1 = 9*length(0)*length(1)*mass(1)*cos(position(1) - position(0))*cos(position(1) - position(0));
+    D1 += 18*length(0)*length(0)*mass(1)*cos(position(1) - position(0));
+    D1 -= 4*length(0)*length(1)*mass(0);
+    
+    //Compute the numerator for the acceleration for theta2
+    N2 = 3*length(1)*mass(1)*velocity(1)*velocity(1)*cos(position(1) - position(0))*sin(position(1) - position(0));
+    N2 += 2*length(0)*mass(0)*velocity(0)*velocity(0)*sin(position(1) - position(0));
+    N2 -= 3*(g*mass(0) + 2*g*mass(1))*cos(position(1) - position(0))*sin(position(0));
+    N2 += 2*g*mass(0)*sin(position(1));
+    //Finally, multiply it all by 3 again
+    N2 *= 3;
+    
+    //Compute the denominator for the acceleration for theta2
+    D2 = 9*length(1)*mass(1)*cos(position(1) - position(0))*cos(position(1) - position(0));
+    D2 += 18*length(0)*mass(1)*cos(position(1) - position(0));
+    D2 -= 4*length(1)*mass(0);
+    
+    if (std::abs(D1) < 1e-9) {
+        std::cout << "D1: " << D1 << std::endl;
+    }
+    if (std::abs(D2) < 1e-9) {
+        std::cout << "D2: " << D2 << std::endl;
+    }
+    
+    result(0) = N1/D1;
+    result(1) = N2/D2;
+    
     return result;
 }
 
@@ -87,7 +99,7 @@ void incrementPendulums(Pendulum& anchored, Pendulum& free, double dt) {
     anchored.theta = newPos(0);
     anchored.velocity = newVel(0);
     free.theta = newPos(1);
-    free.velocity = newPos(1);
+    free.velocity = newVel(1);
 }
 
 int main(int, char const**)
@@ -97,7 +109,7 @@ int main(int, char const**)
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(960, 700), "Double Pendulum");
     
-    Pendulum p1(0.005, 0.15, 0.3, M_PI_4 - 0.1, 0.0), p2(0.005, 0.15, 0.3, M_PI_4 - 0.1, 0.0);
+    Pendulum p1(0.005, 0.15, 0.1, M_PI_2, 0.0), p2(0.005, 0.15, 0.1, M_PI_2, 0.0);
     sf::Clock deltaClock;
     
     // Start the game loop
@@ -123,15 +135,15 @@ int main(int, char const**)
         
         //Increment pendulum positions
         sf::Time dt = deltaClock.restart();
-        incrementPendulums(p1, p2, static_cast<double>(dt.asSeconds())*TIME_SCALE);
+        incrementPendulums(p1, p2, TIME_STEP*TIME_SCALE);
         
         //Draw the pendulums
         sf::RectangleShape rect1(sf::Vector2f(M_TO_PX*p1.width, M_TO_PX*p1.length));
         sf::RectangleShape rect2(sf::Vector2f(M_TO_PX*p2.width, M_TO_PX*p2.length));
         rect1.setOrigin(M_TO_PX*p1.width/2.0, M_TO_PX*p1.length);
         rect2.setOrigin(M_TO_PX*p2.width/2.0, M_TO_PX*p1.length);
-        rect1.setPosition(X_OFFSET, 0);
-        rect2.setPosition(X_OFFSET + M_TO_PX*p1.length*sin(p1.theta), M_TO_PX*p1.length*cos(p1.theta));
+        rect1.setPosition(X_OFFSET, Y_OFFSET);
+        rect2.setPosition(X_OFFSET + M_TO_PX*p1.length*sin(p1.theta), Y_OFFSET + M_TO_PX*p1.length*cos(p1.theta));
         std::cout << dt.asSeconds() << ":" << p1.theta << "," << p2.theta << std::endl;
         rect1.setRotation(translateRotation(p1.theta));
         rect2.setRotation(translateRotation(p2.theta));
