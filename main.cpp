@@ -5,12 +5,18 @@
 #include "Pendulum.hpp"
 
 constexpr double g = 9.807;
-constexpr double TIME_SCALE = 1.0;
 constexpr double TIME_STEP = 0.01; //Tick length in seconds
+constexpr double SIMULATION_DURATION = 1000.0; //Simulation duration in seconds
+constexpr double DISPLAY_SPEEDUP = 20.0; //Run it this many times as fast as the simulation
 //Conversion from meters to pixels
 constexpr double M_TO_PX = 1500.0;
 constexpr int X_OFFSET = 400;
 constexpr int Y_OFFSET = 250;
+
+struct DoublePosition {
+    double anchoredposition;
+    double freeposition;
+};
 
 double degrees(double radians) {
     return radians * 180 / M_PI;
@@ -76,8 +82,20 @@ int main(int, char const**)
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(960, 700), "Double Pendulum");
     
-    Pendulum p1(0.005, 0.15, 0.1, M_PI_2, 0.0), p2(0.005, 0.15, 0.1, M_PI_2, 0.0);
+    Pendulum p1(0.005, 0.15, 1, M_PI_2, 0.0), p2(0.005, 0.15, 1, M_PI_2 + .3, 0.0);
+    
+    //Generate all of the positions over a set time range
+    std::vector<Eigen::Vector2d> positions;
+    positions.push_back(Eigen::Vector2d(p1.theta, p2.theta));
+    for (int i = 0; i < SIMULATION_DURATION/TIME_STEP; ++i) {
+        incrementPendulums(p1, p2, TIME_STEP);
+        positions.push_back(Eigen::Vector2d(p1.theta, p2.theta));
+    }
+    
+    std::cout << "Length of positions: " << positions.size() << std::endl;
+    
     sf::Clock deltaClock;
+    double progress = 0;
     
     // Start the game loop
     while (window.isOpen())
@@ -102,7 +120,16 @@ int main(int, char const**)
         
         //Increment pendulum positions
         sf::Time dt = deltaClock.restart();
-        incrementPendulums(p1, p2, TIME_STEP*TIME_SCALE);
+        progress += dt.asSeconds() * DISPLAY_SPEEDUP;
+        if (progress > SIMULATION_DURATION) {
+            progress -= SIMULATION_DURATION;
+        }
+        
+        //Figure out index to pull from
+        int index = static_cast<int>(std::floor(progress/(SIMULATION_DURATION) * (SIMULATION_DURATION/(TIME_STEP))));
+        
+        double theta1 = positions[index](0);
+        double theta2 = positions[index](1);
         
         //Draw the pendulums
         sf::RectangleShape rect1(sf::Vector2f(M_TO_PX*p1.width, M_TO_PX*p1.length));
@@ -110,11 +137,11 @@ int main(int, char const**)
         rect1.setOrigin(M_TO_PX*p1.width/2.0, M_TO_PX*p1.length);
         rect2.setOrigin(M_TO_PX*p2.width/2.0, M_TO_PX*p1.length);
         rect1.setPosition(X_OFFSET, Y_OFFSET);
-        rect2.setPosition(X_OFFSET + M_TO_PX*p1.length*sin(p1.theta), Y_OFFSET + M_TO_PX*p1.length*cos(p1.theta));
-        std::cout << dt.asSeconds() << ":" << p1.theta << "," << p2.theta << std::endl;
-        rect1.setRotation(translateRotation(p1.theta));
-        rect2.setRotation(translateRotation(p2.theta));
-        std::cout << p1 << ", " << p2 << std::endl;
+        rect2.setPosition(X_OFFSET + M_TO_PX*p1.length*sin(theta1), Y_OFFSET + M_TO_PX*p1.length*cos(theta1));
+        //std::cout << dt.asSeconds() << ":" << p1.theta << "," << p2.theta << std::endl;
+        rect1.setRotation(translateRotation(theta1));
+        rect2.setRotation(translateRotation(theta2));
+        //std::cout << p1 << ", " << p2 << std::endl;
         rect1.setFillColor(sf::Color::Green);
         rect2.setFillColor(sf::Color::Blue);
         window.draw(rect1);
