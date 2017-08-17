@@ -29,46 +29,13 @@ double translateRotation(double mathRotation) {
 Eigen::Vector2d calculateAcceleration(Eigen::Vector2d position, Eigen::Vector2d velocity, Eigen::Vector2d mass, Eigen::Vector2d length) {
     using std::sin;
     using std::cos;
-    Eigen::Vector2d result;
-    double N1, N2, D1, D2;
-    //Compute the numerator for the acceleration for theta1
-    //See math doc for where on Earth this comes from
-    N1 = 2*length(1)*length(1)*mass(1)*velocity(1)*velocity(1)*sin(position(1) - position(0));
-    N1 += 3*g*length(1)*mass(1)*cos(position(1) - position(0))*sin(position(1));
-    N1 += 6*g*length(0)*mass(1)*sin(position(1));
-    N1 -= 2*(g*length(1)*mass(0) + 2*g*length(1)*mass(1))*sin(position(0));
-    N1 += 3*(length(0)*length(1)*mass(1)*velocity(0)*velocity(0)*cos(position(1) - position(0)) + 2*length(0)*length(0)*mass(1)*velocity(0)*velocity(0))*sin(position(1) - position(0));
-    //Finally, multiply by the overall factor 3
-    N1 *= 3;
-    //Compute denominator for the acceleration for theta1
-    D1 = 9*length(0)*length(1)*mass(1)*cos(position(1) - position(0))*cos(position(1) - position(0));
-    D1 += 18*length(0)*length(0)*mass(1)*cos(position(1) - position(0));
-    D1 -= 4*length(0)*length(1)*mass(0);
+    Eigen::Vector2d acceleration;
     
-    //Compute the numerator for the acceleration for theta2
-    N2 = 3*length(1)*mass(1)*velocity(1)*velocity(1)*cos(position(1) - position(0))*sin(position(1) - position(0));
-    N2 += 2*length(0)*mass(0)*velocity(0)*velocity(0)*sin(position(1) - position(0));
-    N2 -= 3*(g*mass(0) + 2*g*mass(1))*cos(position(1) - position(0))*sin(position(0));
-    N2 += 2*g*mass(0)*sin(position(1));
-    //Finally, multiply it all by 3 again
-    N2 *= 3;
+    //These lines were taken from the SAGE output and find/replaced into this form (except substitution of ^ for pow, which was manual)
+    acceleration(0) = -3*(length(0)*mass(1)*pow(velocity(0), 2.0)*cos(position(1) - position(0))*sin(position(1) - position(0)) + 2*length(1)*mass(1)*pow(velocity(1), 2.0)*sin(position(1) - position(0)) + g*mass(1)*cos(position(1) - position(0))*sin(position(1)) - 2*(g*mass(0) + 2*g*mass(1))*sin(position(0)))/(3*length(0)*mass(1)*pow(cos(position(1) - position(0)), 2.0) - 4*length(0)*mass(0) - 12*length(0)*mass(1));
+    acceleration(1) = (3*length(1)*mass(1)*pow(velocity(1), 2.0)*cos(position(1) - position(0))*sin(position(1) - position(0)) - 3*(g*mass(0) + 2*g*mass(1))*cos(position(1) - position(0))*sin(position(0)) + 2*g*mass(0)*sin(position(1)) + 6*g*mass(1)*sin(position(1)) + 2*(length(0)*mass(0)*pow(velocity(0), 2.0) + 3*length(0)*mass(1)*pow(velocity(0), 2.0))*sin(position(1) - position(0)))/(3*length(1)*mass(1)*pow(cos(position(1) - position(0)), 2.0) - 4*length(1)*mass(0) - 12*length(1)*mass(1));
     
-    //Compute the denominator for the acceleration for theta2
-    D2 = 9*length(1)*mass(1)*cos(position(1) - position(0))*cos(position(1) - position(0));
-    D2 += 18*length(0)*mass(1)*cos(position(1) - position(0));
-    D2 -= 4*length(1)*mass(0);
-    
-    if (std::abs(D1) < 1e-9) {
-        std::cout << "D1: " << D1 << std::endl;
-    }
-    if (std::abs(D2) < 1e-9) {
-        std::cout << "D2: " << D2 << std::endl;
-    }
-    
-    result(0) = N1/D1;
-    result(1) = N2/D2;
-    
-    return result;
+    return acceleration;
 }
 
 void incrementPendulums(Pendulum& anchored, Pendulum& free, double dt) {
