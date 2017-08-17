@@ -74,21 +74,17 @@ Now that we have calculated the kinetic and potential energies of the system, we
 
 With the Lagrangian, we can set up the Euler-Lagrange differential equation for each coordinate:
 \begin{gather*}
-	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_i}} = \frac{\partial \lagr}{\partial \theta_i} \\
-	\frac{\partial \lagr}{\partial \dot{\theta_1}} = m_2\dot{\theta_1}\ell_1^2 + \frac12m_2\dot{\theta_2}\ell_1\ell_2\cos(\theta_1 - \theta_2) + \frac13m_1\ell_1^2\dot{\theta_1} \\
-	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_i}} = m_2\ddot{\theta_1}\ell_1^2 + \frac12m_2\ddot{\theta_2}\ell_1\ell_2\cos(\theta_1 - \theta_2) - \frac12m_2\dot{\theta_2}\ell_1\ell_2\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) + \frac13m_1\ell_1^2\ddot{\theta_1} \\
-	\frac{\partial \lagr}{\partial \theta_1} = - \frac12m_2\dot{\theta_1}\dot{\theta_2}\ell_1\ell_2\sin(\theta_1 - \theta_2) - \frac{g}{2}(\ell_1m_1 + 2m_2\ell_1)\sin(\theta_1) \\ \\
-	\frac{\partial \lagr}{\partial \dot{\theta_2}} =  \frac13m_2\dot{\theta_2}\ell_2^2 + \frac12m_2\dot{\theta_1}\ell_1\ell_2\cos(\theta_1 - \theta_2) \\
-	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_2}} = \frac13m_2\ddot{\theta_2}\ell_2^2 + \frac12m_2\ddot{\theta_1}\ell_1\ell_2\cos(\theta_1 - \theta_2) - \frac12m_2\dot{\theta_1}\ell_1\ell_2\sin(\theta_1 - \theta_2)(\dot{\theta_1} - \dot{\theta_2}) \\
-	\frac{\partial \lagr}{\partial \theta_2} = \frac12m_2\dot{\theta_1}\dot{\theta_2}\ell_1\ell_2\sin(\theta_1 - \theta_2) - \frac{g}{2}m_2\ell_2\sin(\theta_2)
+	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_1}} = \frac{\partial \lagr}{\partial \theta_1} \\ \\
+	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_2}} = \frac{\partial \lagr}{\partial \theta_2}
 \end{gather*}
 
-We can now solve these two differential equations for $\ddot{\theta_1}$ and $\ddot{\theta_2}$, which together will be used in our simulation. I did this using sage and would not recommend trying it by hand.
+We can now solve these two differential equations for $\ddot{\theta_1}$ and $\ddot{\theta_2}$, which together will be used in our simulation. I did this entire process using sage and would not recommend trying it by hand. I have decided not to include any of the equations in the process here because they look gross, but you can check out the sage notebook if you're interested.
 
 \begin{gather*}
-	\ddot{\theta_1} = -3\frac{3  l_1 m_2 {\dot{\theta_1}}^2 \cos(\theta_2 - \theta_1) \sin(\theta_2 - \theta_1) + 2  l_2 m_2 {\dot{\theta_2}}^2 \sin(\theta_2 - \theta_1) + 3  g m_2 \cos(\theta_2 - \theta_1) \sin(\theta_2) - 2  {(g m_1 + 2  g m_2)} \sin(\theta_1)}{9  l_1 m_2 \cos(\theta_2 - \theta_1)^2 - 4  l_1 m_1 - 12  l_1 m_2}
-	\\
-	\ddot{\theta_2} = 3\frac{3  l_2 m_2 {\dot{\theta_2}}^2 \cos(\theta_2 - \theta_1) \sin(\theta_2 - \theta_1) - 3  {(g m_1 + 2  g m_2)} \cos(\theta_2 - \theta_1) \sin(\theta_1) + 2  g m_1 \sin(\theta_2) + 6  g m_2 \sin(\theta_2) + 2  {(l_1 m_1 {\dot{\theta_1}}^2 + 3  l_1 m_2 {\dot{\theta_1}}^2)} \sin(\theta_2 - \theta_1)}{9  l_2 m_2 \cos(\theta_2 - \theta_1)^2 - 4  l_2 m_1 - 12  l_2 m_2}
+	N_1 = \ell_1 m_2 {\dot{\theta_1}}^{2} \cos({\theta_2} - {\theta_1}) \sin({\theta_2} - {\theta_1}) + 2  \ell_2 m_2 {\dot{\theta_2}}^{2} \sin({\theta_2} - {\theta_1}) \\ + g m_2 \cos({\theta_2} - {\theta_1}) \sin({\theta_2}) - 2  {(g m_1 + 2  g m_2)} \sin({\theta_1}) \\
+	\ddot{\theta_1} = -3\frac{N_1}{3  \ell_1 m_2 \cos({\theta_2} - {\theta_1})^{2} - 4  \ell_1 m_1 - 12  \ell_1 m_2} \\
+	N_2 = 3  \ell_2 m_2 {\dot{\theta_2}}^{2} \cos({\theta_2} - {\theta_1}) \sin({\theta_2} - {\theta_1}) - 3  {(g m_1 + 2  g m_2)} \cos({\theta_2} - {\theta_1}) \sin({\theta_1}) \\ + 2  g m_1 \sin({\theta_2}) + 6  g m_2 \sin({\theta_2}) + 2  {(\ell_1 m_1 {\dot{\theta_1}}^{2} + 3  \ell_1 m_2 {\dot{\theta_1}}^{2})} \sin({\theta_2} - {\theta_1}) \\
+	\ddot{\theta_2} = \frac{N_2}{3  \ell_2 m_2 \cos({\theta_2} - {\theta_1})^{2} - 4  \ell_2 m_1 - 12  \ell_2 m_2}
 \end{gather*}
 
 We now have a pair of second order differential equations that describes the motion of the system. Using the Runge-Kutta method (aka RK4), we can approximate solutions for $\theta_1$ and $\theta_2$ over some time interval. First, let us redefine this system as a single vector function:
