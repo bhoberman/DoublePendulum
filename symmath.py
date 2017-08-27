@@ -1,5 +1,39 @@
+from re import sub as resub
 from sympy import *
 from sympy.solvers import solve
+
+def fixLatex(bad_latex):
+    good_latex = bad_latex
+    good_latex = good_latex.replace(r"{1}", "1")
+    good_latex = good_latex.replace(r"{2}", "2")
+    good_latex = good_latex.replace(r"\left", "")
+    good_latex = good_latex.replace(r"\right", "")
+    good_latex = good_latex.replace(r"\theta_1{ (t  )}", r"\theta_1")
+    good_latex = good_latex.replace(r"\theta_2{ (t  )}", r"\theta_2")
+    good_latex = good_latex.replace(r"\frac{d^2}{d t^2}  \theta_1", r"\ddot{\theta_1}")
+    good_latex = good_latex.replace(r"\frac{d^2}{d t^2}  \theta_2", r"\ddot{\theta_2}")
+    good_latex = good_latex.replace(r"\frac{d}{d t} \theta_1", r"\dot{\theta_1}")
+    good_latex = good_latex.replace(r"\frac{d}{d t} \theta_2", r"\dot{\theta_2}")
+    good_latex = resub(r'\\frac\{(.*?)}\{?(\d+?)}?', r'\\frac{1}{\2}\1 ', good_latex)
+    return good_latex
+
+def makeCplusplus(python_math):
+    #substitute variables names
+    python_math = python_math.replace("m_1", "mass(0)")
+    python_math = python_math.replace("m_2", "mass(1)")
+    python_math = python_math.replace("l_1", "length(0)")
+    python_math = python_math.replace("l_2", "length(0)")
+    python_math = python_math.replace("m_1", "mass(0)")
+    #substitute values of theta/thetadot
+    python_math = python_math.replace("Derivative(theta_1(t), t)", "velocity(0)")
+    python_math = python_math.replace("Derivative(theta_2(t), t)", "velocity(1)")
+    python_math = python_math.replace("theta_1(t)", "position(0)")
+    python_math = python_math.replace("theta_2(t)", "position(1)")
+    #fix exponents
+    python_math = python_math.replace("velocity(0)**2", "pow(velocity(0), 2.0)")
+    python_math = python_math.replace("velocity(1)**2", "pow(velocity(1), 2.0)")
+    python_math = python_math.replace("cos(position(0) - position(1))**2", "pow(cos(position(0) - position(1)), 2.0)")
+    return python_math
 
 g, m1, m2, l1, l2, t = symbols('g m_1 m_2 l_1 l_2 t')
 theta1 = Function('theta_1')(t)
@@ -31,7 +65,7 @@ freeU = m2*g*y2
 lagrangian = simplify(freelinearK + freeK + anchoredK - anchoredU - freeU)
 
 print("Here's the lagrangian:")
-print(latex(lagrangian))
+print(fixLatex(latex(lagrangian)))
 print('\n'*5)
 
 solution = solve([
@@ -40,10 +74,10 @@ solution = solve([
 ], acc1, acc2)
 solution1 = simplify(solution[acc1])
 solution2 = simplify(solution[acc2])
-print(latex(solution1))
+print(fixLatex(latex(solution1)))
 print()
-print(solution1)
+print(makeCplusplus(solution1))
 print('\n'*2)
-print(latex(solution2))
+print(fixLatex(latex(solution2)))
 print()
-print(solution2)
+print(makeCplusplus(solution2))
