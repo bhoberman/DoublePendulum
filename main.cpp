@@ -7,7 +7,7 @@
 constexpr double g = 9.807;
 constexpr double TIME_STEP = 0.01; //Tick length in seconds
 constexpr double SIMULATION_DURATION = 1000.0; //Simulation duration in seconds
-constexpr double DISPLAY_SPEEDUP = 20.0; //Run it this many times as fast as the simulation
+constexpr double DISPLAY_SPEEDUP = 1.0; //Run it this many times as fast as the simulation
 //Conversion from meters to pixels
 constexpr double M_TO_PX = 1500.0;
 constexpr int X_OFFSET = 400;
@@ -66,8 +66,8 @@ void incrementPendulums(Pendulum& anchored, Pendulum& free, double dt) {
     Vector2d l3 = dt*calculateAcceleration(initialPos + k2, initialVel + l2, mass, length);
     
     Vector2d newPos, newVel;
-    newPos = initialPos + dt/6.0*(k0 + 2.0*k1 + 2.0*k2 + k3);
-    newVel = initialVel + dt/6.0*(l0 + 2.0*l1 + 2.0*l2 + l3);
+    newPos = initialPos + 1/6.0*(k0 + 2.0*k1 + 2.0*k2 + k3);
+    newVel = initialVel + 1/6.0*(l0 + 2.0*l1 + 2.0*l2 + l3);
     
     anchored.theta = newPos(0);
     anchored.velocity = newVel(0);
