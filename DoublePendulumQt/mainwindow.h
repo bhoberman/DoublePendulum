@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtGui>
+#include <QGraphicsItem>
 #include <iostream>
 
 namespace Ui {
@@ -20,6 +21,7 @@ public:
     void playSimulation();
     void pauseSimulation();
     void updateSimulation();
+    void drawSimulation();
 
 private slots:
     void on_l1slider_sliderMoved(int position);
@@ -41,6 +43,10 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
+    QGraphicsRectItem *anchoredRect;
+    QGraphicsRectItem *freeRect;
+    QGraphicsEllipseItem *anchor;
+    QGraphicsEllipseItem *joint;
 };
 
 #endif // MAINWINDOW_H
