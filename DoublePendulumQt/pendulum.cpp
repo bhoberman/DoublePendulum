@@ -2,8 +2,7 @@
 
 #include <iostream>
 
-Pendulum::Pendulum(double width, double length, double mass, double theta_i, double vel_i) {
-    this->width = width;
+Pendulum::Pendulum (double length, double mass, double theta_i, double vel_i) {
     this->length = length;
     this->mass = mass;
     this->theta = theta_i;

@@ -7,9 +7,8 @@ struct Pendulum {
     /**
      All measurements are in meters, kilograms, and radians
      */
-    Pendulum (double width, double length, double mass, double theta_i, double vel_i);
+    Pendulum (double length=1.0, double mass=1.0, double theta_i=0.0, double vel_i=0.0);
     friend std::ostream& operator<<(std::ostream& os, const Pendulum& p);
-    double width;
     double length;
     double mass;
     double theta;

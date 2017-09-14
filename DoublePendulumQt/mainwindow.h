@@ -6,6 +6,8 @@
 #include <QGraphicsItem>
 #include <iostream>
 
+#include "pendulum.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -20,10 +22,14 @@ public:
 
     void playSimulation();
     void pauseSimulation();
-    void updateSimulation();
     void drawSimulation();
+    void initializeSimulation();
+
+    static constexpr int circleWidth = 12;
+    static constexpr int rectWidth = 10;
 
 private slots:
+    void updateSimulation();
     void on_l1slider_sliderMoved(int position);
 
     void on_l2slider_sliderMoved(int position);
@@ -40,6 +46,10 @@ private slots:
 
     void on_theta1slider_sliderMoved(int position);
 
+    void on_startButton_clicked();
+
+    void on_pauseButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
@@ -47,6 +57,12 @@ private:
     QGraphicsRectItem *freeRect;
     QGraphicsEllipseItem *anchor;
     QGraphicsEllipseItem *joint;
+
+    QTimer *timer;
+    bool playing;
+
+    Pendulum anchored;
+    Pendulum free;
 };
 
 #endif // MAINWINDOW_H

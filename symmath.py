@@ -51,7 +51,11 @@ y2 = -l1*cos(theta1) - Rational(1, 2)*l2*cos(theta2)
 
 #v^2 for the CoM of the free stick
 freevsquared = simplify(Derivative(x2, t).doit()**S(2) + Derivative(y2, t).doit()**S(2))
+print("Linear v^2 for the free stick:")
+print(fixLatex(latex(freevsquared)))
 freelinearK = Rational(1, 2)*m2*freevsquared
+print("Linear kinetic energy for the free stick:")
+print(fixLatex(latex(freelinearK)))
 
 #Rotational KE for anchored stick
 anchoredK = Rational(1, 6)*m1*l1**Rational(2)*vel1**Rational(2)

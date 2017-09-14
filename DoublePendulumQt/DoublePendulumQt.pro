@@ -26,11 +26,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    pendulum.cpp
+        pendulum.cpp
 
 HEADERS += \
         mainwindow.h \
-    pendulum.h
+        pendulum.h
 
 FORMS += \
         mainwindow.ui
