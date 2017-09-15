@@ -24,6 +24,8 @@ public:
     void pauseSimulation();
     void drawSimulation();
     void initializeSimulation();
+    void initializeScene();
+    double mathToScene(double math);
 
     static constexpr int circleWidth = 12;
     static constexpr int rectWidth = 10;

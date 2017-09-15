@@ -14,7 +14,7 @@ CXX           = cl
 DEFINES       = -DUNICODE -DWIN32 -DWIN64 -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG
 CFLAGS        = -nologo -Zc:wchar_t -FS -Zc:strictStrings -O2 -MD -W3 -w44456 -w44457 -w44458 $(DEFINES)
 CXXFLAGS      = -nologo -Zc:wchar_t -FS -Zc:strictStrings -Zc:throwingNew -O2 -MD -GR -W3 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 -wd4577 -wd4467 -EHsc $(DEFINES)
-INCPATH       = -I..\DoublePendulumQt -I. -IC:\Qt\5.7\msvc2015_64\include -IC:\Qt\5.7\msvc2015_64\include\QtWidgets -IC:\Qt\5.7\msvc2015_64\include\QtGui -IC:\Qt\5.7\msvc2015_64\include\QtANGLE -IC:\Qt\5.7\msvc2015_64\include\QtCore -Irelease -I. -IC:\Qt\5.7\msvc2015_64\mkspecs\win32-msvc2015 
+INCPATH       = -I..\DoublePendulumQt -I. -I..\DoublePendulumQt\Eigen -IC:\Qt\5.7\msvc2015_64\include -IC:\Qt\5.7\msvc2015_64\include\QtWidgets -IC:\Qt\5.7\msvc2015_64\include\QtGui -IC:\Qt\5.7\msvc2015_64\include\QtANGLE -IC:\Qt\5.7\msvc2015_64\include\QtCore -Irelease -I. -IC:\Qt\5.7\msvc2015_64\mkspecs\win32-msvc2015 
 LINKER        = link
 LFLAGS        = /NOLOGO /DYNAMICBASE /NXCOMPAT /INCREMENTAL:NO /SUBSYSTEM:WINDOWS "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"
 LIBS          = /LIBPATH:C:\Qt\5.7\msvc2015_64\lib C:\Qt\5.7\msvc2015_64\lib\qtmain.lib shell32.lib /LIBPATH:C:\utils\my_sql\my_sql\lib /LIBPATH:C:\utils\postgresql\pgsql\lib C:\Qt\5.7\msvc2015_64\lib\Qt5Widgets.lib C:\Qt\5.7\msvc2015_64\lib\Qt5Gui.lib C:\Qt\5.7\msvc2015_64\lib\Qt5Core.lib 
@@ -51,7 +51,8 @@ OBJECTS       = release\main.obj \
 		release\pendulum.obj \
 		release\moc_mainwindow.obj
 
-DIST          =  ..\DoublePendulumQt\mainwindow.h \
+DIST          = ../../../Downloads/eigen-eigen-5a0156e40feb \
+		(1).zip ..\DoublePendulumQt\mainwindow.h \
 		..\DoublePendulumQt\pendulum.h ..\DoublePendulumQt\main.cpp \
 		..\DoublePendulumQt\mainwindow.cpp \
 		..\DoublePendulumQt\pendulum.cpp
@@ -482,7 +483,7 @@ release\moc_mainwindow.cpp: C:\Qt\5.7\msvc2015_64\include\QtWidgets\QMainWindow 
 		..\DoublePendulumQt\pendulum.h \
 		..\DoublePendulumQt\mainwindow.h \
 		C:\Qt\5.7\msvc2015_64\bin\moc.exe
-	C:\Qt\5.7\msvc2015_64\bin\moc.exe $(DEFINES) -D_MSC_VER=1900 -D_WIN32 -D_WIN64 -IC:/Qt/5.7/msvc2015_64/mkspecs/win32-msvc2015 -IC:/Users/ben/Scripting/DoublePendulum/DoublePendulumQt -IC:/Qt/5.7/msvc2015_64/include -IC:/Qt/5.7/msvc2015_64/include/QtWidgets -IC:/Qt/5.7/msvc2015_64/include/QtGui -IC:/Qt/5.7/msvc2015_64/include/QtANGLE -IC:/Qt/5.7/msvc2015_64/include/QtCore -I. ..\DoublePendulumQt\mainwindow.h -o release\moc_mainwindow.cpp
+	C:\Qt\5.7\msvc2015_64\bin\moc.exe $(DEFINES) -D_MSC_VER=1900 -D_WIN32 -D_WIN64 -IC:/Qt/5.7/msvc2015_64/mkspecs/win32-msvc2015 -IC:/Users/ben/Scripting/DoublePendulum/DoublePendulumQt -IC:/Users/ben/Scripting/DoublePendulum/DoublePendulumQt/Eigen -IC:/Qt/5.7/msvc2015_64/include -IC:/Qt/5.7/msvc2015_64/include/QtWidgets -IC:/Qt/5.7/msvc2015_64/include/QtGui -IC:/Qt/5.7/msvc2015_64/include/QtANGLE -IC:/Qt/5.7/msvc2015_64/include/QtCore -I. ..\DoublePendulumQt\mainwindow.h -o release\moc_mainwindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
