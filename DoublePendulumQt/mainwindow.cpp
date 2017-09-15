@@ -60,10 +60,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::initializeScene() {
     scene->removeItem(anchor);
-    delete anchor;
-    delete anchoredRect;
-    delete joint;
     delete freeRect;
+    delete joint;
+    delete anchoredRect;
+    delete anchor;
 
     QBrush greenBrush(Qt::green);
     QPen blackOutline(Qt::transparent);
