@@ -35,6 +35,3 @@ HEADERS += \
 
 FORMS += \
         mainwindow.ui
-
-DISTFILES += \
-    ../../../Downloads/eigen-eigen-5a0156e40feb (1).zip
