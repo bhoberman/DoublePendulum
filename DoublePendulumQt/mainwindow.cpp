@@ -125,13 +125,13 @@ double MainWindow::mathToScene(double math) {
 
 MainWindow::~MainWindow()
 {
-    delete ui;
-    delete scene;
-    delete anchor;
+    delete freeRect;
     delete joint;
     delete anchoredRect;
-    delete freeRect;
+    delete anchor;
     delete timer;
+    delete scene;
+    delete ui;
 }
 
 void MainWindow::initializeSimulation() {
@@ -161,7 +161,7 @@ void MainWindow::drawSimulation()
 
 void MainWindow::updateSimulation() {
 
-    constexpr double dt = 0.005;
+    constexpr double dt = 0.01;
 
     if (playing) {
         using Eigen::Vector2d;
