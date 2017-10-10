@@ -8,7 +8,7 @@
 \graphicspath{.}
 
 %opening
-\title{Double Pendulum: Theory}
+\title{Simulating a Double Pendulum}
 \author{Ben Hoberman}
 
 \begin{document}
@@ -19,10 +19,12 @@
 \newcommand{\lagr}{\mathcal{L}}
 
 \section{Introduction}
-After finishing my first year of mechanics, I figured that simulating something a little more complicated than what we studied in class might be interesting. I encountered the problem of the double pendulum and decided I'd try my hand at it. Some research divulged that Lagrangian mechanics could give me an easier way to understand the behavior of the system, so after some research and an MIT online lecture (available \href{https://www.youtube.com/watch?v=zhk9xLjrmi4&t=3925s}{here}), this is my attempt at figuring out a double pendulum.
+
+After finishing my first year of mechanics, I wanted to investigate the behavior of more complex systems than we'd covered. I encountered the problem of the double pendulum and decided I'd try my hand at modeling and simulating the system. Some googling brought me to Lagrangian mechanics, and with the help of an online MIT lecture (available \href{https://www.youtube.com/watch?v=zhk9xLjrmi4&t=3925s}{here}) and an old textbook on the Calculus of Variations, this is the model I came up with to model a double pendulum.
 
 \section{Notes}
-To make some of this math more readable, I'll be omitting the dependence of $\theta$'s and their derivatives on $t$ and other variables. Instead of $\theta{(t)}$, you'll just see $\theta$. Also to reduce clutter, I'll be using dot notation to indicate time derivatives, so $\dot{\theta}$ means $\diff{\theta}{t}$. To avoid introducing errors (and to save my sanity), most of the symbolic math was done in sympy. The code I wrote for those symbolic calculations can be found in the symmath.py file in this repository.
+
+I'll be omitting the dependence of $\theta$'s and their derivatives on $t$ and other variables. Instead of $\theta{(t, ...)}$, you'll just see $\theta$. Time derivatives will use dot notation. To avoid introducing errors (and to save my sanity), most of the symbolic math was done in sympy. The code I wrote for those symbolic calculations can be found in the symmath.py file in this repository.
 
 \section{Describing the System}
 \begin{figure}[h!]
