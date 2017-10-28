@@ -20,20 +20,25 @@
 
 \section{Introduction}
 
-After finishing my first year of mechanics, I wanted to investigate the behavior of more complex systems than we'd covered. I encountered the problem of the double pendulum and decided I'd try my hand at modeling and simulating the system. Some googling brought me to Lagrangian mechanics, and with the help of an online MIT lecture (available \href{https://www.youtube.com/watch?v=zhk9xLjrmi4&t=3925s}{here}) and an old textbook on the Calculus of Variations, this is the model I came up with to model a double pendulum.
+After finishing my first year of mechanics, I wanted to investigate the behavior of more complex systems than we'd studied. I encountered the problem of the double pendulum and decided I'd try my hand at simulating the system. Some googling brought me to Lagrangian mechanics, and with the help of an online MIT lecture (available \href{https://www.youtube.com/watch?v=zhk9xLjrmi4&t=3925s}{here}) and an old textbook on the Calculus of Variations, this is the model I came up with to model a double pendulum.
 
 \section{Notes}
 
-I'll be omitting the dependence of $\theta$'s and their derivatives on $t$ and other variables. Instead of $\theta{(t, ...)}$, you'll just see $\theta$. Time derivatives will use dot notation. To avoid introducing errors (and to save my sanity), most of the symbolic math was done in sympy. The code I wrote for those symbolic calculations can be found in the symmath.py file in this repository.
+I'll be omitting the dependence of $\theta$'s and their derivatives on $t$ and other variables, so instead of $\theta{(t, ...)}$, you'll just see $\theta$. Time derivatives will use dot notation. To avoid introducing errors (and to save my sanity), most of the symbolic math was done in sympy. The code I wrote for those symbolic calculations can be found in the embedded symmath.py file.
+
+This model will be one of a physical double pendulum, and both sticks will have a uniform density and behave like an ideal rod.
 
 \section{Describing the System}
 \begin{figure}[h!]
 	\includegraphics[height=5cm]{situation}
 	\caption{A crude image of a double pendulum}
 \end{figure}
+
 $\theta_1$ represents angle between the anchored stick and the vertical, and $\theta_2$ represents the the angle between the free stick and the vertical. Both increase with counterclockwise rotation. The anchored stick has length $l_1$ and mass $m_1$, while the free stick has length $l_2$ and mass $m_2$.
 
-In order to write the Lagrangian for this system, we need to choose a generalized coordinate system and express the system's kinetic and potential energies in terms of those coordinates. We will use $\theta_1$ and $\theta_2$ as our system's independent generalized coordinates.
+In order to model a system with Lagrangian mechanics, we need to write a function (the Lagrangian) of the system's independent generalized coordinates that expresses the difference between the system's potential and kinetic energies. We can then use the Euler-Legrange equation to find a function that determines the path of least action for the Lagrangian, which will predict the behavior of the system.
+
+As it turns out, $\theta_1$ and $\theta_2$ conveniently serve as our system's independent generalized coordinates. As a first step towards finding our Lagrangian, we'll find the kinetic energy of the system.
 
 The two sticks are the only elements of the system that account for its kinetic energy. All of the anchored stick's kinetic energy can be easily expressed as rotational kinetic energy, but the free stick will have a translational kinetic energy in addition to a rotational one, both calculated most easily about the stick's center.
 
@@ -44,14 +49,15 @@ y_1 = -\frac{l_1}{2}\cos(\theta_1) \\
 x_2 = l_1\sin(\theta_1) + \frac{l_2}{2}\sin(\theta_2) \\
 y_2 = -l_1\cos(\theta_1) - \frac{l_2}{2}\cos(\theta_2)
 \end{gather*}
-In order to find the linear velocity, we can use the Pythagorean theorem to find that $v = \sqrt{\dot{x}^2 + \dot{y}^2}$, or, even more conveniently, that $v^2 = \dot{x}^2 + \dot{y}^2$ for the free stick stick:
+In order to find the linear velocity, we can use the Pythagorean theorem to find that $v_2 = \sqrt{\dot{x}_2^2 + \dot{y}_2^2}$, or, even more conveniently, that $v_2^2 = \dot{x}_2^2 + \dot{y}_2^2$ for the free stick:
 \begin{gather*}
 	v_2^2 = \dot{x_2}^2 + \dot{y_2}^2 = (\dot{\theta_1}l_1\cos(\theta_1) + \dot{\theta_2}\frac{l_2}{2}\cos(\theta_2))^2 + (\dot{\theta_1}l_1\sin(\theta_1) + \dot{\theta_2}\frac{l_2}{2}\sin(\theta_2))^2 \\
 	= \dot{\theta_1}^2l_1^2 + \frac{\dot{\theta_2}^2l_2^2}{4} + \dot{\theta_1}\dot{\theta_2}l_1l_2\cos(\theta_1 - \theta_2) \\
+	\text{And $K = \frac12mv^2$} \\
 	K_{\text{linear}} = \frac12m_2v_2^2 = \frac12m_2(\dot{\theta_1}^2l_1^2 + \frac{\dot{\theta_2}^2l_2^2}{4} + \dot{\theta_1}\dot{\theta_2}l_1l_2\cos(\theta_1 - \theta_2)) \\
 	= \frac12m_2\dot{\theta_1}^2l_1^2 + \frac18m_2\dot{\theta_2}^2l_2^2 + \frac12m_2\dot{\theta_1}\dot{\theta_2}l_1l_2\cos(\theta_1 - \theta_2)
 \end{gather*}
-Because our selected independent coordinates describing the system are $\theta_1$ and $\theta_2$, describing the rotational kinetic energy of the system is much more simple. For each stick, $K_{rot} = \frac12 I \dot{\theta}^2$. The anchored stick has moment of intertia $\frac13m_1l_1^2$, and the free stick has moment of intertia $\frac{1}{12}m_2l_2^2$.
+Because our selected independent coordinates describing the system are $\theta_1$ and $\theta_2$, describing the rotational kinetic energy of the two sticks is much more simple. For each stick, $K_{rot} = \frac12 I \dot{\theta}^2$. The anchored stick has moment of intertia $\frac13m_1l_1^2$, and the free stick has moment of intertia $\frac{1}{12}m_2l_2^2$.
 \begin{gather*}
 	K_{\text{rotational}} = \frac16m_1l_1^2\dot{\theta_1}^2 + \frac{1}{24}m_2l_2^2\dot{\theta_2}^2
 \end{gather*}
@@ -62,7 +68,7 @@ We can now find the total kinetic energy of the system:
 	= \frac12m_2\dot{\theta_1}^2l_1^2 + \frac18m_2\dot{\theta_2}^2l_2^2 + \frac12m_2\dot{\theta_1}\dot{\theta_2}l_1l_2\cos(\theta_1 - \theta_2) + \frac16m_1l_1^2\dot{\theta_1}^2 + \frac{1}{24}m_2l_2^2\dot{\theta_2}^2
 \end{gather*}
 
-In order to find the Lagrangian of the system, we must also describe the potential energy of the system at any given time. Gravitational potential energy accounts for the potential energy in this system, so let's figure out the gravitational potential energy of the system. It doesn't actually matter where we pick the zero position to be, so we'll call the horizontal zero in order to simplify the expression (because $\cos(\frac{\pi}{2}) = 0$, and the horizontal is at $\frac{\pi}{2}$ in our system):
+Now, we'll find the potential energy of the system in order to finish constructing the Lagrangian. Gravitational potential energy accounts for all of the potential energy in this system, so let's figure out the gravitational potential energy of the system. It doesn't actually matter where we pick our zero position to be, so we'll call the horizontal zero in order to simplify the expression (because $\cos(\frac{\pi}{2}) = 0$, and the horizontal is at $\frac{\pi}{2}$ in our system):
 \begin{gather*}
 	U_g = \sum mg\Delta h = m_1gy_1 + m_2gy_2 \\
 	= -\frac{l_1m_1g}{2}\cos(\theta_1) - m_2g(l_1\cos(\theta_1) + \frac{l_2}{2}\cos(\theta_2)) \\
@@ -71,9 +77,9 @@ In order to find the Lagrangian of the system, we must also describe the potenti
 	= -\frac{g}{2}(l_1m_1 + 2m_2l_1)\cos(\theta_1) - \frac{g}{2}m_2l_2\cos(\theta_2)
 \end{gather*}
 
-Now that we have calculated the kinetic and potential energies of the system, we can calculate the Lagrangian, $\lagr = K - V$, where $K$ is the total kinetic energy and $V$ is the total potential energy:
+Now that we have calculated the kinetic and potential energies of the system, we can calculate the Lagrangian, $\lagr = K - U$, where $K$ is the total kinetic energy and $U$ is the total potential energy:
 \begin{gather*}
-	\lagr = K - V = \frac{1}{2}g l_1  m_1 \cos{ (\theta_1  )} + g l_1 m_2 \cos{ (\theta_1  )} + \frac{1}{2}g l_2  m_2 \cos{ (\theta_2  )} \\ + \frac{1}{6}l_1^2 m_1  \dot{\theta_1}^2 + \frac{1}{2}l_1^2 m_2  \dot{\theta_1}^2 + \frac{1}{2}l_1 l_2  m_2 \cos{ (\theta_1 - \theta_2  )} \dot{\theta_1} \dot{\theta_2} + \frac{1}{6}l_2^2 m_2  \dot{\theta_2}^2
+	\lagr = K - U = \frac{1}{2}g l_1  m_1 \cos{ (\theta_1  )} + g l_1 m_2 \cos{ (\theta_1  )} + \frac{1}{2}g l_2  m_2 \cos{ (\theta_2  )} \\ + \frac{1}{6}l_1^2 m_1  \dot{\theta_1}^2 + \frac{1}{2}l_1^2 m_2  \dot{\theta_1}^2 + \frac{1}{2}l_1 l_2  m_2 \cos{ (\theta_1 - \theta_2  )} \dot{\theta_1} \dot{\theta_2} + \frac{1}{6}l_2^2 m_2  \dot{\theta_2}^2
 \end{gather*}
 
 With the Lagrangian, we can set up the Euler-Lagrange differential equation for each coordinate:
@@ -82,7 +88,7 @@ With the Lagrangian, we can set up the Euler-Lagrange differential equation for 
 	\diff{}{t}\frac{\partial \lagr}{\partial \dot{\theta_2}} = \frac{\partial \lagr}{\partial \theta_2}
 \end{gather*}
 
-We can now solve these two differential equations for $\ddot{\theta_1}$ and $\ddot{\theta_2}$, which together will be used in our simulation. I did this entire process using sage and would not recommend trying it by hand. I have decided not to include any of the equations in the process here because they look gross, but you can check out the sage notebook if you're interested.
+We can now solve these two differential equations for $\ddot{\theta_1}$ and $\ddot{\theta_2}$, which together will be used in our simulation. I would not recommend trying this math by hand, but here are the results brought to you by SymPy (notated strangely in order to fit on the page):
 
 \begin{gather*}
 	N_1 = l_1 m_2 {\dot{\theta_1}}^{2} \cos({\theta_2} - {\theta_1}) \sin({\theta_2} - {\theta_1}) + 2  l_2 m_2 {\dot{\theta_2}}^{2} \sin({\theta_2} - {\theta_1}) \\ + g m_2 \cos({\theta_2} - {\theta_1}) \sin({\theta_2}) - 2  {(g m_1 + 2  g m_2)} \sin({\theta_1}) \\
@@ -91,7 +97,7 @@ We can now solve these two differential equations for $\ddot{\theta_1}$ and $\dd
 	\ddot{\theta_2} = \frac{N_2}{3  l_2 m_2 \cos({\theta_2} - {\theta_1})^{2} - 4  l_2 m_1 - 12  l_2 m_2}
 \end{gather*}
 
-We now have a pair of second order differential equations that describes the motion of the system. Using the Runge-Kutta method (aka RK4), we can approximate solutions for $\theta_1$ and $\theta_2$ over some time interval. First, let us redefine this system as a single vector function:
+We now have a pair of second order differential equations that describes the motion of the system. Using the Fourth Order Runge-Kutta method (aka RK4), we can approximate solutions for $\theta_1$ and $\theta_2$ over some time interval. First, let's redefine this system as a single vector function (for convenience):
 
 \begin{gather*}
 	\theta = 
@@ -108,17 +114,19 @@ We now have a pair of second order differential equations that describes the mot
 	\begin{bmatrix}
 		\ddot{\theta_1} \\
 		\ddot{\theta_2}
-	\end{bmatrix} \\
-	\ddot{\theta}(\theta, \dot{\theta}) = \boldsymbol{A}^{-1}\vec{b}\text{, according to $\boldsymbol{A}(\theta, \dot{\theta})$ and $\vec{b}(\theta, \dot{\theta})$ above}
+	\end{bmatrix}
 \end{gather*}
 
-Now we will set up the RK4 method for this system.
+Now, let's set up our system of differential equations to numerically solve with RK4. Because we have a second order differential equation, we'll have a coupled system of what's essentially two simultaneous RK4 solutions. At each of the four steps (one at the start of the interval, two at the midpoint, and one at the end), we'll first calculate the acceleration (using the previously found $\ddot{\theta}$), then use that value to calculate the change in velocity, and that TODO PICKUP HERE
 
 \begin{gather*}
-	\text{Let } z = \dot{\theta}(\theta, \dot{\theta}) = \diff{\theta}{t} \text{, so } \diff{z}{t} = \ddot{\theta} \\
-	z = \dot{\theta} \\
-	\dot{z} = \ddot{\theta}(\theta, \dot{\theta}) \\
-	\theta_{new} = \theta + \frac{h}{6}(k_0 + 2k_1 + 2k_2 + k_3) \\
+	\dot{z} = f(z, \dot{z}) \\
+	\ddot{z} = g(z, \dot{z})
+\end{gather*}
+
+\begin{gather*}
+	\text{Let } z = \dot{\theta} \text{, so } \dot{z} = \ddot{\theta} \\
+	\theta = \theta_0 + \frac{h}{6}(k_0 + 2k_1 + 2k_2 + k_3) \\
 	\dot{\theta}_{new} = \dot{\theta} + \frac{h}{6}(l_0 + 2l_1 + 2l_2 + l_3) \\
 	\text{Let our step be $h$, and $k$ and $l$ are as follows:}\\
 	k_0 = hz = h\dot{\theta}_0 \\
